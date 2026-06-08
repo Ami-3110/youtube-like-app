@@ -11,6 +11,7 @@
 /frontend/.env.local
 /frontend/.env.development.local
 /frontend/.env.production.local
+/frontend/public/movies/mov/
 
 # macOS
 .DS_Store
