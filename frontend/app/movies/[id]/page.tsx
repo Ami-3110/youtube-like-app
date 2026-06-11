@@ -1,4 +1,6 @@
 // frontend/app/movies/[id]/page.tsx
+import { CommentSection } from "@/components/comments/CommentSection";
+import { getComments } from "@/lib/api/comments";
 
 interface MovieDetail {
   id: number;
@@ -17,7 +19,7 @@ async function getMovie(id: string): Promise<MovieDetail> {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fewtch movie");
+    throw new Error("Failed to fetch movie");
   }
 
   return res.json();
@@ -30,6 +32,7 @@ export default async function MovieDetailPage({
   }) {
   const { id } = await params;
   const movie = await getMovie(id);
+  const comments = await getComments(id);
 
   return (
     <main className="mx-auto flex max-w-7xl gap-6 px-4 py-6 text-white">
@@ -39,19 +42,19 @@ export default async function MovieDetailPage({
             <source src={movie.movie_path} type="video/mp4" />
           </video>
         )}
-        <h1 className="mt-4 text-2xl font-bold text-white">
-          {movie.title}
-        </h1>
+        <h1 className="mt-4 text-2xl font-bold text-white">{movie.title}</h1>
 
-        <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-centrer md:justify-between">
+        <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-emerald-500 font-bold text-black">
-              {movie.user.slice(0,1)}
+              {movie.user.slice(0, 1)}
             </div>
 
             <div>
               <p className="font-bold">{movie.user}</p>
-              <p className="text-xs text-slate-400">チャンネル登録者数 216万人</p>
+              <p className="text-xs text-slate-400">
+                チャンネル登録者数 216万人
+              </p>
             </div>
 
             <button className="rounded-full bg-white px-4 py-2 text-sm font-bold text-black hover:bg-slate-200">
@@ -85,29 +88,14 @@ export default async function MovieDetailPage({
             </span>
           </p>
 
-          <p className="mt-2 leading-relaxxed">
+          <p className="mt-2 leading-relaxed">
             {movie.description ?? "No description."}
           </p>
         </div>
 
-        <section className="mt-8">
-          <div className="flex item-center gap-6">
-            <h2 className="text-xl font-bold">153 件のコメント</h2>
-            <button className="text-sm font-bold text-slate-300">
-              並べ替え
-            </button>
-          </div>
+        <CommentSection movieId={id} comments={comments} />
 
-          <div className="mt-6 flex gap-3">
-            <div className="flex size-9 items-center justify-center rounded-full bg-slate-500 text-sm font-bold">
-              A
-            </div>
-            <div className="flex-1 border-b border-slate-600 pb-2 text-sm text-slate-400">
-              コメントする...
-            </div>
-          </div>
-        </section>
-      </section>   
+      </section>
 
       <aside className="hidden w-90 shrink-0 lg:block">
         <div className="rounded-xl bg-slate-900 p-4">
@@ -117,7 +105,6 @@ export default async function MovieDetailPage({
           </p>
         </div>
       </aside>
-
     </main>
   );
 }
