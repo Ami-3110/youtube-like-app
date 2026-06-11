@@ -1,6 +1,7 @@
 // frontend/app/movies/[id]/page.tsx
 import { CommentSection } from "@/components/comments/CommentSection";
 import { getComments } from "@/lib/api/comments";
+import { ShareButton } from "@/components/movies/ShareButton";
 
 interface MovieDetail {
   id: number;
@@ -69,9 +70,7 @@ export default async function MovieDetailPage({
             <button className="rounded-full bg-slate-800 px-4 py-2 hover:bg-slate-700">
               👎
             </button>
-            <button className="rounded-full bg-slate-800 px-4 py-2 hover:bg-slate-700">
-              共有
-            </button>
+            <ShareButton />
           </div>
         </div>
 
