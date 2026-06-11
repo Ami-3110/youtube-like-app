@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             TopicSeeder::class,
             MovieSeeder::class,
             MovieTopicSeeder::class,
+            CommentSeeder::class,
         ]);
 
     }
