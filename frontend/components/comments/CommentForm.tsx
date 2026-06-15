@@ -2,15 +2,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Comment } from "@/types/comment";
 
 type CommentFormProps = {
   movieId: string;
+  onAddComment: (comment: Comment) => void;
 };
 
-export function CommentForm({ movieId }: CommentFormProps) {
+export function CommentForm({ movieId, onAddComment }: CommentFormProps) {
   const [body, setBody] = useState("");
-  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,8 +31,10 @@ export function CommentForm({ movieId }: CommentFormProps) {
       return;
     }
 
+    const newComment: Comment = await res.json();
+
+    onAddComment(newComment);
     setBody("");
-    router.refresh();
   }
 
   return (

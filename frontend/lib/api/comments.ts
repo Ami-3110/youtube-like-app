@@ -15,4 +15,3 @@ export async function getComments(movieId: string): Promise<Comment[]> {
 
   return res.json();
 }
-
