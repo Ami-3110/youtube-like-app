@@ -2,17 +2,8 @@
 import { CommentSection } from "@/components/comments/CommentSection";
 import { getComments } from "@/lib/api/comments";
 import { ShareButton } from "@/components/movies/ShareButton";
+import type { MovieDetail } from "@/types/movie";
 
-interface MovieDetail {
-  id: number;
-  title: string;
-  description: string | null;
-  user: string;
-  movie_path: string | null;
-  topics: string[];
-  views: number;
-  created_at: string;
-}
 
 async function getMovie(id: string): Promise<MovieDetail> {
   const res = await fetch(`http://localhost:8000/api/movies/${id}`, {
@@ -70,7 +61,9 @@ export default async function MovieDetailPage({
             <button className="rounded-full bg-slate-800 px-4 py-2 hover:bg-slate-700">
               👎
             </button>
-            <ShareButton />
+            <ShareButton
+              movieId={movie.id}
+              title={movie.title} />
           </div>
         </div>
 

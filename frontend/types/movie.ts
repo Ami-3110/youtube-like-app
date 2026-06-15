@@ -9,3 +9,14 @@ export type Movie = {
   views: number;
   created_at: string;
 };
+
+export type MovieDetail = {
+  id: number;
+  title: string;
+  description: string | null;
+  user: string;
+  movie_path: string | null;
+  topics: string[];
+  views: number;
+  created_at: string;
+}
