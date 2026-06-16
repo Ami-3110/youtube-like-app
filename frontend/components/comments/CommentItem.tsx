@@ -91,6 +91,12 @@ export function CommentItem({
             <span className="ml-2 text-xs text-slate-400">
               {formatRelativeTime(comment.created_at)}
             </span>
+
+            {comment.created_at !== comment.updated_at && (
+              <span className="ml-2 text-xs text-slate-500">
+                （編集済み）
+              </span>
+            )}
           </div>
 
           <div ref={menuRef} className="relative">
