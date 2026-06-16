@@ -14,6 +14,14 @@ type CommentSectionProps = {
 export function CommentSection({ movieId, comments }: CommentSectionProps) {
   const [commentList, setCommentList] = useState(comments);
 
+  function handleUpdateComment(updatedComment: Comment) {
+    setCommentList((prevComments) =>
+      prevComments.map((comment) =>
+        comment.id === updatedComment.id ? updatedComment : comment,
+      ),
+    );
+  }
+  
   function handleDeleteComment(commentId: number) {
     setCommentList((prevComments) =>
       prevComments.filter((comment) => comment.id !== commentId),
@@ -23,7 +31,7 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
   function handleAddComment(newComment: Comment) {
     setCommentList((prev) => [newComment, ...prev]);
   }
-  
+
   return (
     <section className="mt-8 max-w-4xl">
       <h2 className="text-xl font-bold text-white">
@@ -39,6 +47,7 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
           <CommentItem
             key={comment.id}
             comment={comment}
+            onUpdate={handleUpdateComment}
             onDelete={handleDeleteComment}
           />
         ))}

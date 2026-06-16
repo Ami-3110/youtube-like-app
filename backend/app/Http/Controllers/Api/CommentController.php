@@ -36,7 +36,19 @@ class CommentController extends Controller
       return response()->json($comment, 201);
     }
 
-    //public function update()
+    public function update(Request $request, Comment $comment)
+    {
+      $validated = $request->validate([
+        'body' => ['required', 'string', 'max:1000'],
+      ]);
+      $comment->update([
+        'body' => $validated['body'],
+      ]);
+
+      return response()->json(
+        $comment->load('user')
+      );
+    }
 
     public function destroy(Comment $comment)
     {

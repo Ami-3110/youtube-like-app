@@ -19,6 +19,6 @@ Route::get('/movies/{movie}/comments', [CommentController::class, 'index']);
 // Comment Post
 Route::post('/movies/{movie}/comments', [CommentController::class, 'store']);
 // Comment Update
-
+Route::patch('/comments/{comment}', [CommentController::class, 'update']);
 // Comment delete
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
