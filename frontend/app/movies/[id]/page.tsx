@@ -2,6 +2,7 @@
 import { CommentSection } from "@/components/comments/CommentSection";
 import { getComments } from "@/lib/api/comments";
 import { ShareButton } from "@/components/movies/ShareButton";
+import  MovieReactionButtons from "@/components/movies/MovieReactionButtons";
 import type { MovieDetail } from "@/types/movie";
 
 
@@ -55,12 +56,7 @@ export default async function MovieDetailPage({
           </div>
 
           <div className="flex items-center gap-2 text-sm font-bold">
-            <button className="rounded-full bg-slate-800 px-4 py-2 hover:bg-slate-700">
-              👍 3282
-            </button>
-            <button className="rounded-full bg-slate-800 px-4 py-2 hover:bg-slate-700">
-              👎
-            </button>
+            <MovieReactionButtons movieId={movie.id} />
             <ShareButton
               movieId={movie.id}
               title={movie.title} />

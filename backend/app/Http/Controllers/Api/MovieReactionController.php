@@ -11,10 +11,16 @@ class MovieReactionController extends Controller
 {
     public function show(Movie $movie)
     {
+      $userId = 1; // （仮）
+
+      $myReaction = MovieReaction::where('movie_id', $movie->id)
+        ->where('user_id', $userId)
+        ->value('type');
+
       return response()->json([
         'like_count' => $movie->reactions()->where('type', 'like')->count(),
         'dislike_count' => $movie->reactions()->where('type', 'dislike')->count(),
-        'my_reaction' => null,
+        'my_reaction' => $myReaction,
       ]);
     }
 

@@ -20,6 +20,8 @@ export function ShareButton({ movieId, title }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isEmbedOpen, setIsEmbedOpen] = useState(false);
+  const [embedCopied, setEmbedCopied] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   function handleShareX() {
     const url = encodeURIComponent(window.location.href);
@@ -63,8 +65,6 @@ export function ShareButton({ movieId, title }: Props) {
     window.location.href = `mailto:?body=${url}`;
   }
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   function scrollIcons(direction: "left" | "right") {
     scrollRef.current?.scrollBy({
       left: direction === "left" ? -220 : 220,
@@ -84,8 +84,6 @@ export function ShareButton({ movieId, title }: Props) {
   function getCurrentUrl() {
     return window.location.href;
   }
-
-  const [embedCopied, setEmbedCopied] = useState(false);
 
   function getEmbedUrl() {
     return `${window.location.origin}/embed/movies/${movieId}`;
