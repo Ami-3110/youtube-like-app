@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\MovieController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\MovieReactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,8 @@ Route::post('/movies/{movie}/comments', [CommentController::class, 'store']);
 Route::patch('/comments/{comment}', [CommentController::class, 'update']);
 // Comment delete
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+
+// MovieReaction Get
+Route::get('/movies/{movie}/reactions', [MovieReactionController::class, 'show']);
+// MovieReaction Post
+Route::post('/movies/{movie}/reactions', [MovieReactionController::class, 'toggle']);

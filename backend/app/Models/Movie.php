@@ -35,15 +35,9 @@ class Movie extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function likes(): HasMany
+    public function reactions(): HasMany
     {
-        return $this->hasMany(MovieLike::class);
-    }
-
-    public function likedUsers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'movie_likes')
-            ->withTimestamps();
+        return $this->hasMany(MovieReaction::class);
     }
 
     public function topics(): BelongsToMany

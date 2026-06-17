@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class MovieLike extends Model
+class MovieReaction extends Model
 {
     protected $fillable = [
         'movie_id',
         'user_id',
+        'type',
     ];
 
     public function movie(): BelongsTo

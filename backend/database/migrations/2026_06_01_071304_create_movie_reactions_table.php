@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movie_likes', function (Blueprint $table) {
+        Schema::create('movie_reactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('movie_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->enum('type', ['like', 'dislike']);
 
             $table->unique(['movie_id', 'user_id']);
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movie_likes');
+        Schema::dropIfExists('movie_reactions');
     }
 };

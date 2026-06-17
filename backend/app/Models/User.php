@@ -39,9 +39,9 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function movieLikes(): HasMany
+    public function movieReactions(): HasMany
     {
-        return $this->hasMany(MovieLike::class);
+      return $this->hasMany(MovieReaction::class);
     }
 
     public function commentLikes(): HasMany
