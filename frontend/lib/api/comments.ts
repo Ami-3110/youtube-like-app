@@ -1,5 +1,6 @@
 // frontend/lib/api/comments.ts
 import { Comment } from "@/types/comment";
+import { getCookie, getCsrfCookie } from "@/lib/api/auth";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,19 +23,47 @@ export async function getComments(movieId: string): Promise<Comment[]> {
   return res.json();
 }
 
+export async function createComment(movieId: string, body: string) {
+  await getCsrfCookie();
+
+  const token = getCookie("XSRF-TOKEN");
+
+  const res = await fetch(`${API_BASE_URL}/movies/${movieId}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-XSRF-TOKEN": token,
+    },
+    credentials: "include",
+    body: JSON.stringify({ body }),
+  });
+
+  if (!res.ok) {
+    throw new Error("コメント投稿に失敗しました");
+  }
+
+  return res.json();
+}
+
 export async function updateComment(
   commentId: number,
   body: string,
 ) {
-  const res = await fetch(`${API_BASE_URL}/comments/${commentId}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ body }),
-    }
-  );
+  await getCsrfCookie();
+
+  const token = getCookie("XSRF-TOKEN");
+
+  const res = await fetch(`${API_BASE_URL}/comments/${commentId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-XSRF-TOKEN": token,
+    },
+    credentials: "include",
+    body: JSON.stringify({ body }),
+  });
 
   if (!res.ok) {
     throw new Error("コメント編集に失敗しました");
@@ -43,8 +72,17 @@ export async function updateComment(
 }
 
 export async function deleteComment(commentId: number): Promise<void> {
+  await getCsrfCookie();
+
+  const token = getCookie("XSRF-TOKEN");
+
   const res = await fetch(`${API_BASE_URL}/comments/${commentId}`, {
     method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "X-XSRF-TOKEN": token,
+    },
+    credentials: "include",
   });
 
   if (!res.ok) {

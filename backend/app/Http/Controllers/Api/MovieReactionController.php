@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class MovieReactionController extends Controller
 {
-    public function show(Movie $movie)
+    public function show(Request $request, Movie $movie)
     {
-      $userId = 1; // （仮）
+      $userId = $request->user()?->id;
 
       $myReaction = MovieReaction::where('movie_id', $movie->id)
         ->where('user_id', $userId)
@@ -30,7 +30,7 @@ class MovieReactionController extends Controller
         'type' => ['required', 'in:like,dislike'],
       ]);
 
-      $userId = 1; //（仮）
+      $userId = $request->user()->id;
 
       $reaction = MovieReaction::where('movie_id', $movie->id)
       ->where('user_id', $userId)

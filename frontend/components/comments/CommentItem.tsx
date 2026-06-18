@@ -12,12 +12,14 @@ import { ConfirmModal } from "@/components/ui/ConfirmModal";
 
 type CommentItemProps = {
   comment: Comment;
-  onUpdate: (Updatedomment: Comment) => void;
+  currentUserId: number | null;
+  onUpdate: (UpdatedComment: Comment) => void;
   onDelete: (commentId: number) => void;
 };
 
 export function CommentItem({
   comment,
+  currentUserId,
   onUpdate,
   onDelete,
 }: CommentItemProps) {
@@ -26,6 +28,7 @@ export function CommentItem({
   const [isEditing, setIsEditing] = useState(false);
   const [editBody, setEditBody] = useState(comment.body);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const isOwner = currentUserId === comment.user.id;
 
   async function handleUpdate() {
     if (!editBody.trim()) {
@@ -93,48 +96,49 @@ export function CommentItem({
             </span>
 
             {comment.created_at !== comment.updated_at && (
-              <span className="ml-2 text-xs text-slate-500">
-                （編集済み）
-              </span>
+              <span className="ml-2 text-xs text-slate-500">（編集済み）</span>
             )}
           </div>
 
-          <div ref={menuRef} className="relative">
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="rounded-full p-2 hover:bg-slate-800"
-            >
-              <BsThreeDotsVertical size={16} />
-            </button>
+          {isOwner && (
+            <div ref={menuRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="rounded-full p-2 hover:bg-slate-800"
+              >
+                <BsThreeDotsVertical size={16} />
+              </button>
 
-            {isMenuOpen && (
-              <div className="absolute right-0 top-10 z-10 w-24 rounded-xl bg-slate-800 shadow-lg">
-                <button
-                  type="button"
-                  onClick={() =>{
-                    setIsMenuOpen(false);
-                    setIsEditing(true);
-                  }}
-                  className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700">
-                  <FiEdit size={18} />
-                  <span className="text-sm">編集</span>
-                </button>
+              {isMenuOpen && (
+                <div className="absolute right-0 top-10 z-10 w-24 rounded-xl bg-slate-800 shadow-lg">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsEditing(true);
+                    }}
+                    className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
+                  >
+                    <FiEdit size={18} />
+                    <span className="text-sm">編集</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsDeleteModalOpen(true);
-                  }}
-                  className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
-                >
-                  <FiTrash2 size={18} />
-                  <span className="text-sm">削除</span>
-                </button>
-              </div>
-            )}
-          </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsDeleteModalOpen(true);
+                    }}
+                    className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
+                  >
+                    <FiTrash2 size={18} />
+                    <span className="text-sm">削除</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {isEditing ? (
@@ -157,8 +161,8 @@ export function CommentItem({
               <button
                 type="button"
                 onClick={() => {
-                setEditBody(comment.body);
-                setIsEditing(false);
+                  setEditBody(comment.body);
+                  setIsEditing(false);
                 }}
                 className="rounded-full px-4 py-1 text-sm text-slate-300 hover:bg-slate-800"
               >
@@ -167,9 +171,7 @@ export function CommentItem({
             </div>
           </div>
         ) : (
-          <p className="mt-2 text-sm text-slate-200">
-            {comment.body}
-          </p>
+          <p className="mt-2 text-sm text-slate-200">{comment.body}</p>
         )}
       </div>
 

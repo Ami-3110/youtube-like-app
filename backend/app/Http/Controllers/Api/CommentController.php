@@ -27,7 +27,7 @@ class CommentController extends Controller
       ]);
       $comment = Comment::create([
         'movie_id' => $movie->id,
-        'user_id' => 1, // （仮）認証入れたらauth()->id()に
+        'user_id' => $request->user()->id,
         'body' => $validated['body'],
       ]);
 
@@ -38,6 +38,12 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
+      if ($comment->user_id !== $request->user()->id) {
+        return response()->json([
+          'message' => '権限がありません',
+        ], 403);
+      }
+
       $validated = $request->validate([
         'body' => ['required', 'string', 'max:1000'],
       ]);
@@ -50,8 +56,13 @@ class CommentController extends Controller
       );
     }
 
-    public function destroy(Comment $comment)
+    public function destroy(Request $request, Comment $comment)
     {
+      if ($comment->user_id !== $request->user()->id) {
+        return response()->json([
+          'message' => '権限がありません',
+        ], 403);
+      }
       $comment->delete();
 
       return response()->json([

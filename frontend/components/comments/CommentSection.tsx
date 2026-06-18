@@ -1,10 +1,11 @@
-// frontend/components/comments/CommentSectiom.tsx
+// frontend/components/comments/CommentSection.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Comment } from "@/types/comment";
 import { CommentItem } from "./CommentItem";
 import { CommentForm } from "./CommentForm";
+import { getCurrentUser } from "@/lib/api/auth";
 
 type CommentSectionProps = {
   movieId: string;
@@ -13,6 +14,16 @@ type CommentSectionProps = {
 
 export function CommentSection({ movieId, comments }: CommentSectionProps) {
   const [commentList, setCommentList] = useState(comments);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+
+  useEffect(() => {
+    async function fetchCurrentUser() {
+      const user = await getCurrentUser();
+      setCurrentUserId(user?.id ?? null);
+    }
+
+    fetchCurrentUser();
+  }, []);
 
   function handleUpdateComment(updatedComment: Comment) {
     setCommentList((prevComments) =>
@@ -47,6 +58,7 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
           <CommentItem
             key={comment.id}
             comment={comment}
+            currentUserId={currentUserId}
             onUpdate={handleUpdateComment}
             onDelete={handleDeleteComment}
           />

@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { Comment } from "@/types/comment";
+import { createComment } from "@/lib/api/comments";
 
 type CommentFormProps = {
   movieId: string;
@@ -15,26 +16,14 @@ export function CommentForm({ movieId, onAddComment }: CommentFormProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const res = await fetch(
-      `http://localhost:8000/api/movies/${movieId}/comments`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ body }),
-      }
-    );
+    try {
+      const newComment = await createComment(movieId, body);
 
-    if (!res.ok) {
+      onAddComment(newComment);
+      setBody("");
+    } catch {
       alert("コメントの投稿に失敗しました");
-      return;
     }
-
-    const newComment: Comment = await res.json();
-
-    onAddComment(newComment);
-    setBody("");
   }
 
   return (
