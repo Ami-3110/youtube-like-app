@@ -3,11 +3,13 @@
 
 import { useState } from "react";
 import { getCurrentUser, login } from "@/lib/api/auth";
-
+import Link from "next/link";
+  
 export default function LoginPage() {
   const [email, setEmail] = useState("test@example.com");
   const [password, setPassword] = useState("password");
   const [message, setMessage] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,8 +20,10 @@ export default function LoginPage() {
       const user = await getCurrentUser();
 
       setMessage(`ログイン成功:${user.name}`);
+      setIsLoggedIn(true);
     } catch {
       setMessage("ログイン失敗");
+      setIsLoggedIn(false);
     }
   }
 
@@ -31,11 +35,11 @@ export default function LoginPage() {
         <input
           type="email"
           value={email}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="メールアドレス"
           className="w-full rounded border p-2"
         />
-      
+
         <input
           type="password"
           value={password}
@@ -43,7 +47,7 @@ export default function LoginPage() {
           placeholder="パスワード"
           className="w-full rounded border p-2"
         />
-      
+
         <button
           type="submit"
           className="rounded bg-blue-600 px-4 py-2 text-white"
@@ -53,6 +57,24 @@ export default function LoginPage() {
       </form>
 
       {message && <p className="mt-4">{message}</p>}
+
+      {isLoggedIn && (
+        <div className="mt-4 flex flex-col gap-2">
+          <Link
+            href="/dashboard"
+            className="rounded bg-green-600 px-4 py-2 text-center text-white"
+          >
+            ダッシュボードへ
+          </Link>
+
+          <Link
+            href="/movies/1"
+            className="rounded bg-slate-700 px-4 py-2 text-center text-white"
+          >
+            動画詳細へ
+          </Link>
+        </div>
+      )}
     </main>
   );
 }
