@@ -43,6 +43,7 @@ export async function toggleMovieReaction(
     credentials: "include",
     body: JSON.stringify({ type }),
   });
+  
   if (!res.ok) {
     throw new Error("Failed to toggle movie reaction");
   }

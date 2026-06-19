@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\MovieController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\MovieReactionController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\api\CommentReactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,12 +23,17 @@ Route::get('/movies', [MovieController::class, 'index']);
 // Movie detail
 Route::get('/movies/{movie}', [MovieController::class, 'show']);
 
-// Comment Get 
-Route::get('/movies/{movie}/comments', [CommentController::class, 'index']);
 // MovieReaction Get
 Route::get('/movies/{movie}/reactions', [MovieReactionController::class, 'show']);
+// Comment Get 
+Route::get('/movies/{movie}/comments', [CommentController::class, 'index']);
+// CommentReaction Get
+Route::get('/comments/{comment}/reaction',
+[CommentReactionController::class, 'show']);
+  // CommentReaction Post
+  Route::post('/comments/{comment}/reaction',[CommentReactionController::class, 'toggle']);
 
-
+// Authentication required
 Route::middleware('auth:sanctum')->group(function () {
   // Comment Post
   Route::post('/movies/{movie}/comments', [CommentController::class, 'store']);
@@ -38,4 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // MovieReaction Post
   Route::post('/movies/{movie}/reactions', [MovieReactionController::class, 'toggle']);
+
+
+
 });
+

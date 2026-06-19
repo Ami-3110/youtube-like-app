@@ -18,32 +18,40 @@ class Comment extends Model
 
     public function movie(): BelongsTo
     {
-        return $this->belongsTo(Movie::class);
+      return $this->belongsTo(Movie::class);
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+      return $this->belongsTo(User::class);
     }
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Comment::class, 'parent_id');
+      return $this->belongsTo(Comment::class, 'parent_id');
     }
 
     public function replies(): HasMany
     {
-        return $this->hasMany(Comment::class, 'parent_id');
+      return $this->hasMany(Comment::class, 'parent_id');
     }
 
-    public function likes(): HasMany
+    public function reactions(): HasMany
     {
-        return $this->hasMany(CommentLike::class);
+      return $this->hasMany(CommentReaction::class);
     }
 
     public function likedUsers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'comment_likes')
+      return $this->belongsToMany(User::class, 'comment_reactions')
+            ->wherePivot('type', 'like')
             ->withTimestamps();
+    }
+
+    public function dislikedUsers(): BelongsToMany
+    {
+      return $this->belongsToMany(User::class, 'comment_reactions')
+        ->wherePivot('type', 'dislike')
+        ->withTimestamps();
     }
 }

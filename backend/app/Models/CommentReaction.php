@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CommentLike extends Model
+class CommentReaction extends Model
 {
     protected $fillable = [
         'comment_id',
         'user_id',
+        'type',
     ];
 
     public function comment(): BelongsTo
