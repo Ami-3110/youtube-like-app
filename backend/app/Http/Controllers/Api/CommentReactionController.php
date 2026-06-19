@@ -32,37 +32,32 @@ class CommentReactionController extends Controller
         'type' => ['required', 'in:like,dislike'],
     ]);
 
-    $userId = $request->user()?->id ?? 1;
-    $type = $validated['type'];
+    $userId = $request->user()?->id;
 
     $reaction = CommentReaction::where('comment_id', $comment->id)
         ->where('user_id', $userId)
         ->first();
 
-    if ($reaction && $reaction->type === $type) {
+    if ($reaction && $reaction->type === $validated['type']) {
         $reaction->delete();
-
-        return response()->json([
-            'type' => null,
-            'like_count' => $comment->reactions()->where('type', 'like')->count(),
-            'dislike_count' => $comment->reactions()->where('type', 'dislike')->count(),
-        ]);
+        $myReaction = null;
+    } elseif ($reaction) {
+      $reaction->update([
+        'type' => $validated['type'],
+      ]);
+      $myReaction = $validated['type'];
+    } else {
+      CommentReaction::create([
+        'comment_id' => $comment->id,
+        'user_id' => $userId,
+        'type' => $validated['type'],
+      ]);
+      $myReaction = $validated['type'];
     }
-
-    CommentReaction::updateOrCreate(
-        [
-            'comment_id' => $comment->id,
-            'user_id' => $userId,
-        ],
-        [
-            'type' => $type,
-        ]
-    );
-
-    return response()->json([
-        'type' => $type,
-        'like_count' => $comment->reactions()->where('type', 'like')->count(),
-        'dislike_count' => $comment->reactions()->where('type', 'dislike')->count(),
-    ]);
-  }
+      return response()->json([
+          'like_count' => $comment->reactions()->where('type', 'like')->count(),
+          'dislike_count' => $comment->reactions()->where('type', 'dislike')->count(),
+          'my_reaction' => $myReaction,
+      ]);
+    }
 }

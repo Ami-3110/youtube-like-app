@@ -1,26 +1,20 @@
-// frontend/components/movies/MovieReactionButtons.tsx
-
+// frontend/components/comments/CommentReactionButtons.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import {
-  getMovieReaction,
-  MovieReactionResponse,
-  toggleMovieReaction,
-} from "@/lib/api/movieReactions";
-import {
-  AiOutlineLike,
-  AiFillLike,
-  AiOutlineDislike,
-  AiFillDislike,
-} from "react-icons/ai";
+  getCommentReaction,
+  CommentReactionResponse,
+  toggleCommentReaction,
+} from "@/lib/api/commentReactions";
+import { AiOutlineLike, AiFillLike, AiOutlineDislike, AiFillDislike } from "react-icons/ai";
 
 type Props = {
-  movieId: number;
+  commentId: number;
 };
 
-export default function MovieReactionButtons({ movieId }: Props) {
-  const [reaction, setReaction] = useState<MovieReactionResponse | null>(null);
+export default function CommentReactionButton({ commentId }: Props) {
+  const [reaction, setReaction] = useState<CommentReactionResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleLike() {
@@ -28,7 +22,7 @@ export default function MovieReactionButtons({ movieId }: Props) {
 
     setIsLoading(true);
     try {
-      const data = await toggleMovieReaction(movieId, "like");
+      const data = await toggleCommentReaction(commentId, "like");
       setReaction(data);
     } finally {
       setIsLoading(false);
@@ -40,7 +34,7 @@ export default function MovieReactionButtons({ movieId }: Props) {
 
     setIsLoading(true);
     try {
-      const data = await toggleMovieReaction(movieId, "dislike");
+      const data = await toggleCommentReaction(commentId, "dislike");
       setReaction(data);
     } finally {
       setIsLoading(false);
@@ -49,12 +43,12 @@ export default function MovieReactionButtons({ movieId }: Props) {
 
   useEffect(() => {
     async function fetchReaction() {
-      const data = await getMovieReaction(movieId);
+      const data = await getCommentReaction(commentId);
       setReaction(data);
     }
 
     fetchReaction();
-  }, [movieId]);
+  }, [commentId]);
 
   return (
     <div className="flex items-center gap-4">
@@ -65,9 +59,9 @@ export default function MovieReactionButtons({ movieId }: Props) {
         className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-slate-800 disabled:opacity-50"
       >
         {reaction?.my_reaction === "like" ? (
-          <AiFillLike size={20} />
+          <AiFillLike size={16} />
         ) : (
-          <AiOutlineLike size={20} />
+          <AiOutlineLike size={16} />
         )}
 
         {reaction?.like_count ?? 0}
@@ -80,9 +74,9 @@ export default function MovieReactionButtons({ movieId }: Props) {
         className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-slate-800 disabled:opacity-50"
       >
         {reaction?.my_reaction === "dislike" ? (
-          <AiFillDislike size={20} />
+          <AiFillDislike size={16} />
         ) : (
-          <AiOutlineDislike size={20} />
+          <AiOutlineDislike size={16} />
         )}
       </button>
     </div>

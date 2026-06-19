@@ -28,10 +28,9 @@ Route::get('/movies/{movie}/reactions', [MovieReactionController::class, 'show']
 // Comment Get 
 Route::get('/movies/{movie}/comments', [CommentController::class, 'index']);
 // CommentReaction Get
-Route::get('/comments/{comment}/reaction',
+Route::get('/comments/{comment}/reactions',
 [CommentReactionController::class, 'show']);
-  // CommentReaction Post
-  Route::post('/comments/{comment}/reaction',[CommentReactionController::class, 'toggle']);
+
 
 // Authentication required
 Route::middleware('auth:sanctum')->group(function () {
@@ -45,7 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
   // MovieReaction Post
   Route::post('/movies/{movie}/reactions', [MovieReactionController::class, 'toggle']);
 
-
+  // CommentReaction Post
+  Route::post('/comments/{comment}/reactions',[CommentReactionController::class, 'toggle']);
 
 });
 

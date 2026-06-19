@@ -8,7 +8,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { deleteComment, updateComment } from "@/lib/api/comments";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
-
+import CommentReactionButtons from "./CommentReactionButtons";
 
 type CommentItemProps = {
   comment: Comment;
@@ -61,13 +61,14 @@ export function CommentItem({
       alert("コメントの削除に失敗しました");
     }
   }
-
+  
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
     }
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsMenuOpen(false);
@@ -81,7 +82,6 @@ export function CommentItem({
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
-
 
   return (
     <>
@@ -173,6 +173,9 @@ export function CommentItem({
         ) : (
           <p className="mt-2 text-sm text-slate-200">{comment.body}</p>
         )}
+        <div>
+          <CommentReactionButtons commentId={comment.id} />
+        </div>
       </div>
 
       <ConfirmModal

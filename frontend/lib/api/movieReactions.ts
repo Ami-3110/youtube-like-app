@@ -36,14 +36,14 @@ export async function toggleMovieReaction(
   const res = await fetch(`${API_BASE_URL}/movies/${movieId}/reactions`, {
     method: "POST",
     headers: {
-      "Content-Type": "applocation/json",
+      "Content-Type": "application/json",
       Accept: "application/json",
       "X-XSRF-TOKEN": token,
     },
     credentials: "include",
     body: JSON.stringify({ type }),
   });
-  
+
   if (!res.ok) {
     throw new Error("Failed to toggle movie reaction");
   }
