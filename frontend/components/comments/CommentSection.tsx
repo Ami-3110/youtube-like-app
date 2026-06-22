@@ -40,7 +40,13 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
   }
 
   function handleAddComment(newComment: Comment) {
-    setCommentList((prev) => [newComment, ...prev]);
+    setCommentList((prev) => {
+      if (newComment.parent_id !== null) {
+        return [...prev, newComment];
+      }
+
+      return [newComment, ...prev];
+    });
   }
 
   return (
@@ -53,16 +59,41 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
         <CommentForm movieId={movieId} onAddComment={handleAddComment} />
       </div>
 
-      <div className="mt-4 space-y-4">
-        {commentList.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            comment={comment}
-            currentUserId={currentUserId}
-            onUpdate={handleUpdateComment}
-            onDelete={handleDeleteComment}
-          />
-        ))}
+      <div className="mt-2 space-y-3">
+        {commentList
+          .filter((comment) => comment.parent_id === null)
+          .map((comment) => {
+            const replies = commentList.filter(
+              (reply) => reply.parent_id === comment.id,
+            );
+
+            return (
+              <div key={comment.id}>
+                <CommentItem
+                  comment={comment}
+                  movieId={movieId}
+                  currentUserId={currentUserId}
+                  onUpdate={handleUpdateComment}
+                  onDelete={handleDeleteComment}
+                  onAddComment={handleAddComment}
+                />
+
+                <div className="ml-12 mt-2 space-y-2">
+                  {replies.map((reply) => (
+                    <CommentItem
+                      key={reply.id}
+                      comment={reply}
+                      movieId={movieId}
+                      currentUserId={currentUserId}
+                      onUpdate={handleUpdateComment}
+                      onDelete={handleDeleteComment}
+                      onAddComment={handleAddComment}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
       </div>
     </section>
   );

@@ -7,17 +7,26 @@ import { createComment } from "@/lib/api/comments";
 
 type CommentFormProps = {
   movieId: string;
+  parentId?: number | null;
   onAddComment: (comment: Comment) => void;
 };
 
-export function CommentForm({ movieId, onAddComment }: CommentFormProps) {
+export function CommentForm({
+  movieId,
+  parentId = null,
+  onAddComment,
+}: CommentFormProps) {
   const [body, setBody] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
-      const newComment = await createComment(movieId, body);
+      const newComment = await createComment(
+        movieId,
+        body,
+        parentId,
+      );
 
       onAddComment(newComment);
       setBody("");

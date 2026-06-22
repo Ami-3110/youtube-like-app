@@ -23,7 +23,11 @@ export async function getComments(movieId: string): Promise<Comment[]> {
   return res.json();
 }
 
-export async function createComment(movieId: string, body: string) {
+export async function createComment(
+  movieId: string,
+  body: string,
+  parentId: number | null = null,
+) {
   await getCsrfCookie();
 
   const token = getCookie("XSRF-TOKEN");
@@ -36,10 +40,15 @@ export async function createComment(movieId: string, body: string) {
       "X-XSRF-TOKEN": token,
     },
     credentials: "include",
-    body: JSON.stringify({ body }),
+    body: JSON.stringify({
+      body,
+      parent_id: parentId,
+    }),
   });
 
   if (!res.ok) {
+    const error = await res.json();
+    console.error(error);
     throw new Error("コメント投稿に失敗しました");
   }
 

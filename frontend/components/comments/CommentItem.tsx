@@ -9,19 +9,24 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { deleteComment, updateComment } from "@/lib/api/comments";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import CommentReactionButtons from "./CommentReactionButtons";
+import { CommentForm } from "./CommentForm";
 
 type CommentItemProps = {
   comment: Comment;
+  movieId: string;
   currentUserId: number | null;
   onUpdate: (UpdatedComment: Comment) => void;
   onDelete: (commentId: number) => void;
+  onAddComment: (comment: Comment) => void;
 };
 
 export function CommentItem({
   comment,
+  movieId,
   currentUserId,
   onUpdate,
   onDelete,
+  onAddComment,
 }: CommentItemProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -29,6 +34,7 @@ export function CommentItem({
   const [editBody, setEditBody] = useState(comment.body);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const isOwner = currentUserId === comment.user.id;
+  const [isReplyFormOpen, setIsReplyFormOpen] = useState(false);
 
   async function handleUpdate() {
     if (!editBody.trim()) {
@@ -173,9 +179,30 @@ export function CommentItem({
         ) : (
           <p className="mt-2 text-sm text-slate-200">{comment.body}</p>
         )}
-        <div>
+        <div className="mt-3 flex items-center gap-5">
           <CommentReactionButtons commentId={comment.id} />
+
+          <button
+            type="button"
+            onClick={() => setIsReplyFormOpen(!isReplyFormOpen)}
+            className="rounded-full px-3 py-2 text-xs font-bold text-slate-300 hover:bg-slate-800"
+          >
+            返信
+          </button>
         </div>
+
+        {isReplyFormOpen && (
+          <div className="mt-3">
+            <CommentForm
+            movieId={movieId}
+            parentId={comment.id}
+            onAddComment={(newComment) =>{
+              onAddComment(newComment);
+              setIsReplyFormOpen(false);
+            }}
+            />
+          </div>
+        )}
       </div>
 
       <ConfirmModal

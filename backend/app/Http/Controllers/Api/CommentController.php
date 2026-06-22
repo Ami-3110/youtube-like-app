@@ -24,10 +24,13 @@ class CommentController extends Controller
     {
       $validated = $request->validate([
         'body' => ['required', 'string', 'max:1000'],
+        'parent_id' => ['nullable', 'exists:comments,id'],
       ]);
+
       $comment = Comment::create([
         'movie_id' => $movie->id,
         'user_id' => $request->user()->id,
+        'parent_id' => $validated['parent_id'] ?? null,
         'body' => $validated['body'],
       ]);
 
