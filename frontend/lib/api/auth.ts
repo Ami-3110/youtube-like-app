@@ -58,10 +58,15 @@ export async function getCurrentUser() {
 }
 
 export async function logout() {
+  await getCsrfCookie();
+
+  const token = getCookie("XSRF-TOKEN");
+
   const res = await fetch(`${API_URL}/logout`, {
     method: "POST",
     headers: {
       Accept: "application/json",
+      "X-XSRF-TOKEN": token,
     },
     credentials: "include",
   });
