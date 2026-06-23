@@ -1,13 +1,15 @@
 // frontend/components/header/UserMenu.tsx
 "use client";
 
-import { useState } from "react";
-import { logout } from "@/lib/api/auth";
+import { useEffect, useState } from "react";
+import { getCurrentUser, logout } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const [userName, setUserName] = useState("");
+  const [avatarPath, setAvatarPath] = useState<string | null>(null);
 
   async function handleLogout() {
     try {
@@ -21,17 +23,47 @@ export default function UserMenu() {
     }
   }
 
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getCurrentUser();
+
+      if (user) {
+        setUserName(user.name);
+        setAvatarPath(user.avatar_path);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
   return (
     <div className="pt-1">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 font-bold text-white">
-        A
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 font-bold text-white"
+      >
+        {avatarPath ? (
+          <img
+            src={avatarPath}
+            alt={userName}
+            className="h-full w-full rounded-full object-cover"
+          />
+        ) : userName ? (
+          userName.charAt(0).toUpperCase()
+        ) : (
+          "?"
+        )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 rounded-xl be-slate-900 p-2 shadow-lg ring-1 ring-slate-700">
+        <div className="absolute right-0 mt-2 rounded-xl bg-slate-900 p-2 shadow-lg ring-1 ring-slate-700">
+          <div className="border-b border-slate-700 px-4 py-3">
+            <p className="text-sm font-semibold text-white">{userName}</p>
+            <p className="text-sm text-slate-400">いずれhandle</p>
+            <p className="text-sm text-sky-500 mt-2">チャンネルを表示</p>
+          </div>
+
           <button
             type="button"
             onClick={handleLogout}
@@ -39,7 +71,18 @@ export default function UserMenu() {
           >
             ログアウト
           </button>
-          </div>
+          <div className="my-1 border-b border-slate-700" />
+          <button
+            className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800"
+          >
+            デザイン: 深海
+          </button>
+          <button
+            className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800"
+          >
+            設定
+          </button>
+        </div>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 export default function SearchBar() {
   return (
-    <form className="flex w-full max-w-md pt-1">
+    <form className="flex w-full max-w-xl pt-1">
       <input
         type="text"
         placeholder="検索"
