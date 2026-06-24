@@ -93,17 +93,25 @@ export function CommentItem({
     <>
       <div className="rounded-xl bg-slate-900/70 p-4">
         <div className="flex items-start justify-between">
-          <div>
-            <span className="text-sm font-semibold text-white">
-              {comment.user.name}
-            </span>
-            <span className="ml-2 text-xs text-slate-400">
-              {formatRelativeTime(comment.created_at)}
-            </span>
+          <div className="flex items-start gap-3">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sky-500 text-sm font-bold text-white">
+              {comment.user.name.slice(0, 1)}
+            </div>
 
-            {comment.created_at !== comment.updated_at && (
-              <span className="ml-2 text-xs text-slate-500">（編集済み）</span>
-            )}
+            <div>
+              <span className="text-sm font-semibold text-white">
+                {comment.user.name}
+              </span>
+              <span className="ml-2 text-xs text-slate-400">
+                {formatRelativeTime(comment.created_at)}
+              </span>
+
+              {comment.created_at !== comment.updated_at && (
+                <span className="ml-2 text-xs text-slate-500">
+                  （編集済み）
+                </span>
+              )}
+            </div>
           </div>
 
           {isOwner && (
@@ -177,9 +185,9 @@ export function CommentItem({
             </div>
           </div>
         ) : (
-          <p className="mt-2 text-sm text-slate-200">{comment.body}</p>
+          <p className="mt-2 ml-12 text-sm text-slate-200">{comment.body}</p>
         )}
-        <div className="mt-3 flex items-center gap-5">
+        <div className="mt-3 ml-12 flex items-center gap-5">
           <CommentReactionButtons commentId={comment.id} />
 
           <button
@@ -194,12 +202,12 @@ export function CommentItem({
         {isReplyFormOpen && (
           <div className="mt-3">
             <CommentForm
-            movieId={movieId}
-            parentId={comment.id}
-            onAddComment={(newComment) =>{
-              onAddComment(newComment);
-              setIsReplyFormOpen(false);
-            }}
+              movieId={movieId}
+              parentId={comment.id}
+              onAddComment={(newComment) => {
+                onAddComment(newComment);
+                setIsReplyFormOpen(false);
+              }}
             />
           </div>
         )}
