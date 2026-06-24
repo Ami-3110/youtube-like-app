@@ -30,7 +30,8 @@ Route::get('/movies/{movie}/comments', [CommentController::class, 'index']);
 // CommentReaction Get
 Route::get('/comments/{comment}/reactions',
 [CommentReactionController::class, 'show']);
-
+// RecommendMovies Get
+Route::get('/movies/{movie}/related', [MovieController::class, 'related']);
 
 // Authentication required
 Route::middleware('auth:sanctum')->group(function () {

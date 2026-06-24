@@ -85,4 +85,20 @@ class MovieController extends Controller
     {
         //
     }
+
+    public function related(Movie $movie)
+    {
+      $topicIds = $movie->topics()->pluck('topics.id');
+
+      $relatedMovies = Movie::with(['user', 'topics'])
+      ->where('id', '!=', $movie->id)
+      ->whereHas('topics', function ($query) use ($topicIds) {
+        $query->whereIn('topics.id', $topicIds);
+      })
+      ->latest()
+      ->limit(10)
+      ->get();
+
+      return response()->json($relatedMovies);
+    }
 }

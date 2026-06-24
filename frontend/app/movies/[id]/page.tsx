@@ -5,6 +5,7 @@ import { ShareButton } from "@/components/movies/ShareButton";
 import  MovieReactionButtons from "@/components/movies/MovieReactionButtons";
 import type { MovieDetail } from "@/types/movie";
 import Header from "@/components/header/Header";
+import RelatedMovies from "@/components/relatedMovies/RelatedMovies";
 
 
 async function getMovie(id: string): Promise<MovieDetail> {
@@ -31,10 +32,10 @@ export default async function MovieDetailPage({
   return (
     <>
       <Header />
-      <main className="mx-auto flex max-w-7xl gap-6 px-4 pt-10 pb-6 text-white">
+      <main className="mx-auto flex max-w-[1400px] gap-6 px-4 pt-10 pb-6 text-white">
         <section className="min-w-0 flex-1">
           {movie.movie_path && (
-            <video controls className="w-full max-w-4xl rounded-xl bg-black">
+            <video controls className="w-full rounded-xl bg-black">
               <source src={movie.movie_path} type="video/mp4" />
             </video>
           )}
@@ -91,9 +92,10 @@ export default async function MovieDetailPage({
         <aside className="hidden w-90 shrink-0 lg:block">
           <div className="rounded-xl bg-slate-900 p-4">
             <p className="font-bold">おすすめ動画</p>
-            <p className="mt-2 text-sm text-slate-400">
-              ここは後でMovieCardの横長版を作る
-            </p>
+            <RelatedMovies
+              movieId={movie.id}
+              topics={movie.topics}
+            />
           </div>
         </aside>
       </main>
