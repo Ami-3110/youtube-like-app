@@ -1,7 +1,7 @@
 // frontend/components/header/UserMenu.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCurrentUser, logout } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,7 @@ export default function UserMenu() {
   const router = useRouter();
   const [userName, setUserName] = useState("");
   const [avatarPath, setAvatarPath] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   async function handleLogout() {
     try {
@@ -36,8 +37,39 @@ export default function UserMenu() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+  
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+    
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    }
+  })
+
   return (
-    <div className="relative pt-1">
+    <div ref={menuRef}  className="relative pt-1">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
