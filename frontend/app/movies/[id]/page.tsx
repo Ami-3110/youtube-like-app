@@ -43,12 +43,20 @@ export default async function MovieDetailPage({
 
           <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-full bg-emerald-500 font-bold text-black">
-                {movie.user.slice(0, 1)}
+              <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-emerald-500 font-bold text-black">
+                {movie.user.avatar_path ? (
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${movie.user.avatar_path}`}
+                    alt={movie.user.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  movie.user.name.slice(0, 1)
+                )}
               </div>
 
               <div>
-                <p className="font-bold">{movie.user}</p>
+                <p className="font-bold">{movie.user.name}</p>
                 <p className="text-xs text-slate-400">
                   チャンネル登録者数 216万人
                 </p>

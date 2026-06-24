@@ -94,8 +94,16 @@ export function CommentItem({
       <div className="rounded-xl bg-slate-900/70 p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sky-500 text-sm font-bold text-white">
-              {comment.user.name.slice(0, 1)}
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-sky-500 text-sm font-bold text-white">
+              {comment.user.avatar_path ? (
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${comment.user.avatar_path}`}
+                  alt={comment.user.name}
+                  className="h-full w-full rounded-full object-cover"
+                />
+              ) : (
+                comment.user.name.slice(0, 1)
+              )}
             </div>
 
             <div>

@@ -14,9 +14,14 @@ export type MovieDetail = {
   id: number;
   title: string;
   description: string | null;
-  user: string;
+  user: {
+    id: number;
+    name: string;
+    avatar_path: string | null;
+  };
   movie_path: string | null;
+  thumbnail_path: string | null;
   topics: string[];
   views: number;
   created_at: string;
-}
+};

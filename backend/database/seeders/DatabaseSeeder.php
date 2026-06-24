@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
           [
             'name' => 'Tester1',
             'password' => bcrypt('password'),
+            'avatar_path' => '/avatars/tester1.png',
           ],
         );
         User::updateOrCreate(

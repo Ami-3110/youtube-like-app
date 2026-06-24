@@ -18,11 +18,6 @@ class MovieController extends Controller
               'user:id,name',
               'topics:id,name'
               ])
-            // ->select([
-            //   'id',
-            //   'user_id',
-            //   'title',
-            //   ])
             ->get()
             ->map(function ($movie) {
               return [
@@ -53,7 +48,7 @@ class MovieController extends Controller
         $movie->increment('views');
 
         $movie->load([
-          'user:id,name',
+          'user:id,name,avatar_path',
           'topics:id,name',
         ]);
 
@@ -61,7 +56,11 @@ class MovieController extends Controller
           'id' => $movie->id,
           'title' => $movie->title,
           'description' => $movie->description,
-          'user' => $movie->user->name,
+          'user' => [
+            'id' => $movie->user->id,
+            'name' => $movie->user->name,
+            'avatar_path' => $movie->user->avatar_path,
+          ],
           'movie_path' => $movie->movie_path,
           'thumbnail_path' => $movie->thumbnail_path,
           'topics' => $movie->topics->pluck('name'),
