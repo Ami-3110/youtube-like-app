@@ -69,7 +69,7 @@ export default function UserMenu() {
   }, []);
 
   return (
-    <div ref={menuRef}  className="relative pt-1">
+    <div ref={menuRef} className="relative pt-1">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -97,7 +97,12 @@ export default function UserMenu() {
           </div>
 
           <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
-            デザイン: 深海
+            登録チャンネル
+          </button>
+          <div className="my-1 border-b border-slate-700" />
+
+          <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
+            デザイン: Deep Sea
           </button>
           <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
             設定

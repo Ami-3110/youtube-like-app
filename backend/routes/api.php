@@ -4,8 +4,9 @@ use App\Http\Controllers\Api\MovieController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\MovieReactionController;
-use App\Http\Controllers\api\CommentReactionController;
-use App\Http\Controllers\api\FollowController;
+use App\Http\Controllers\Api\CommentReactionController;
+use App\Http\Controllers\Api\FollowController;
+use App\Http\Controllers\Api\MovieUploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,8 @@ Route::middleware('auth:sanctum')->group(function () {
   // CommentReaction post
   Route::post('/comments/{comment}/reactions',[CommentReactionController::class, 'toggle']);
 
+  //MovieUpload
+  Route::post('/movies', [MovieUploadController::class, 'store']);
 
   // Follow post
   Route::post('/users/{user}/follow',[FollowController::class, 'toggle']);
