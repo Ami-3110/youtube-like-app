@@ -6,7 +6,8 @@ import  MovieReactionButtons from "@/components/movies/MovieReactionButtons";
 import type { MovieDetail } from "@/types/movie";
 import Header from "@/components/header/Header";
 import RelatedMovies from "@/components/relatedMovies/RelatedMovies";
-
+import FollowButton from "@/components/movies/FollowButton";
+import SubscriberCount from "@/components/movies/SubscriberCount";
 
 async function getMovie(id: string): Promise<MovieDetail> {
   const res = await fetch(`http://localhost:8000/api/movies/${id}`, {
@@ -57,14 +58,10 @@ export default async function MovieDetailPage({
 
               <div>
                 <p className="font-bold">{movie.user.name}</p>
-                <p className="text-xs text-slate-400">
-                  チャンネル登録者数 216万人
-                </p>
+                <SubscriberCount userId={movie.user.id} />
               </div>
 
-              <button className="rounded-full bg-white px-4 py-2 text-sm font-bold text-black hover:bg-slate-200">
-                チャンネル登録
-              </button>
+              <FollowButton userId={movie.user.id} />
             </div>
 
             <div className="flex items-center gap-2 text-sm font-bold">
