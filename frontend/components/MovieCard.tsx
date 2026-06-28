@@ -2,6 +2,7 @@
 import type { Movie } from "@/types/movie";
 import { formatRelativeTime } from "@/utils/formatRelativeTime";
 import Image from "next/image";
+import { mediaUrl } from "@/lib/mediaUrl";
 
 type Props = {
   movie: Movie;
@@ -15,7 +16,7 @@ export default function MovieCard({ movie }: Props) {
       <div className="relative mb-3 flex aspect-video overflow-hidden rounded-xl bg-slate-200 text-sm text-slate-500">
         {movie.thumbnail_path ? (
           <Image
-            src={movie.thumbnail_path}
+            src={mediaUrl(movie.thumbnail_path)}
             alt={movie.title}
             fill
             className="object-cover transition duration-300 hover:scale-105"

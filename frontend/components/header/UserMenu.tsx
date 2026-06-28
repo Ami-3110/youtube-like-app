@@ -1,6 +1,8 @@
 // frontend/components/header/UserMenu.tsx
 "use client";
 
+import Image from "next/image";
+import { mediaUrl } from "@/lib/mediaUrl";
 import { useEffect, useRef, useState } from "react";
 import { getCurrentUser, logout } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
@@ -76,9 +78,11 @@ export default function UserMenu() {
         className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-sky-500 font-bold text-white"
       >
         {avatarPath ? (
-          <img
-            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${avatarPath}`}
+          <Image
+            src={mediaUrl(avatarPath)}
             alt={userName}
+            width={40}
+            height={40}
             className="h-full w-full rounded-full object-cover"
           />
         ) : userName ? (

@@ -7,7 +7,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function uploadMovie(formData: FormData) {
   await getCsrfCookie();
 
-  const token = getCookie("XSRF-TOKEN");
+  const token = decodeURIComponent(getCookie("XSRF-TOKEN") ?? "");
 
   const res = await fetch(`${API_BASE_URL}/movies`, {
     method: "POST",

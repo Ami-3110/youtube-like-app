@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MovieReactionController;
 use App\Http\Controllers\Api\CommentReactionController;
 use App\Http\Controllers\Api\FollowController;
 use App\Http\Controllers\Api\MovieUploadController;
+use App\Http\Controllers\Api\TopicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::post('/logout', [LoginController::class, 'destroy'])
 Route::get('/movies', [MovieController::class, 'index']);
 // Movie detail
 Route::get('/movies/{movie}', [MovieController::class, 'show']);
+// Topics
+Route::get('/topics', [TopicController::class, 'index']);
 
 // MovieReaction get
 Route::get('/movies/{movie}/reactions', [MovieReactionController::class, 'show']);
@@ -35,7 +38,7 @@ Route::get('/comments/{comment}/reactions',
 [CommentReactionController::class, 'show']);
 // RecommendMovies get
 Route::get('/movies/{movie}/related', [MovieController::class, 'related']);
-// Follow show
+// Follow get
 Route::get('/users/{user}/follow', [FollowController::class, 'show']);
 
 // Authentication required

@@ -1,6 +1,8 @@
 // frontend/app/movies/[id]/page.tsx
+import Image from "next/image";
 import { CommentSection } from "@/components/comments/CommentSection";
 import { getComments } from "@/lib/api/comments";
+import { mediaUrl } from "@/lib/mediaUrl";
 import { ShareButton } from "@/components/movies/ShareButton";
 import  MovieReactionButtons from "@/components/movies/MovieReactionButtons";
 import type { MovieDetail } from "@/types/movie";
@@ -10,9 +12,12 @@ import FollowButton from "@/components/movies/FollowButton";
 import SubscriberCount from "@/components/movies/SubscriberCount";
 
 async function getMovie(id: string): Promise<MovieDetail> {
-  const res = await fetch(`http://localhost:8000/api/movies/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch movie");
@@ -33,11 +38,14 @@ export default async function MovieDetailPage({
   return (
     <>
       <Header />
-      <main className="mx-auto flex max-w-[1400px] gap-6 px-4 pt-10 pb-6 text-white">
+      <main className="mx-auto flex max-w-350 gap-6 px-4 pt-10 pb-6 text-white">
         <section className="min-w-0 flex-1">
           {movie.movie_path && (
             <video controls className="w-full rounded-xl bg-black">
-              <source src={movie.movie_path} type="video/mp4" />
+              <source
+                src={mediaUrl(movie.movie_path)}
+                type="video/mp4"
+              />
             </video>
           )}
           <h1 className="mt-4 text-2xl font-bold text-white">{movie.title}</h1>
@@ -46,9 +54,11 @@ export default async function MovieDetailPage({
             <div className="flex items-center gap-3">
               <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-emerald-500 font-bold text-black">
                 {movie.user.avatar_path ? (
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${movie.user.avatar_path}`}
+                  <Image
+                    src={mediaUrl(movie.user.avatar_path)}
                     alt={movie.user.name}
+                    width={40}
+                    height={40}
                     className="h-full w-full object-cover"
                   />
                 ) : (

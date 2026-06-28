@@ -16,8 +16,10 @@ class MovieUploadController extends Controller
       $validated = $request->validate([
         'title' => ['required', 'string', 'max:255'],
         'description' => ['nullable', 'string'],
-        'movie' => ['required', 'file', 'mimes:mp4,mov,avi,web', 'max:102400'],
+        'movie' => ['required', 'file', 'mimes:mp4,mov,avi,webm', 'max:102400'],
         'thumbnail' => ['nullable', 'image', 'max:5120'],
+        'topic_ids' => ['nullable', 'array'],
+        'topic_ids.*' => ['integer', 'exists:topics,id']
       ]);
 
       $moviePath = $request->file('movie')->store('movies', 'public');
@@ -36,8 +38,11 @@ class MovieUploadController extends Controller
         'thumbnail_path' => $thumbnailPath ? '/storage/' . $thumbnailPath : null,
       ]);
 
+      $movie->topics()->sync($validated['topic_ids'] ?? []);
+
       return response()->json($movie, 201);
     }
+
 
     private function generateThumbnail(string $moviePath): string
     {
