@@ -4,20 +4,17 @@ import { CommentSection } from "@/components/comments/CommentSection";
 import { getComments } from "@/lib/api/comments";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { ShareButton } from "@/components/movies/ShareButton";
-import  MovieReactionButtons from "@/components/movies/MovieReactionButtons";
+import MovieReactionButtons from "@/components/movies/MovieReactionButtons";
 import type { MovieDetail } from "@/types/movie";
 import Header from "@/components/header/Header";
 import RelatedMovies from "@/components/relatedMovies/RelatedMovies";
-import FollowButton from "@/components/movies/FollowButton";
-import SubscriberCount from "@/components/movies/SubscriberCount";
+import FollowButton from "@/components/channel/FollowButton";
+import SubscriberCount from "@/components/channel/SubscriberCount";
 
 async function getMovie(id: string): Promise<MovieDetail> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch movie");
@@ -29,8 +26,8 @@ async function getMovie(id: string): Promise<MovieDetail> {
 export default async function MovieDetailPage({
   params,
 }: {
-    params: Promise<{ id: string }>;
-  }) {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const movie = await getMovie(id);
   const comments = await getComments(id);

@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
           [
             'name' => 'Tester1',
             'password' => bcrypt('password'),
+            'handle' => 'tester1',
             'avatar_path' => '/avatars/tester1.png',
+            'is_admin' => true,
           ],
         );
         User::updateOrCreate(
@@ -31,6 +33,7 @@ class DatabaseSeeder extends Seeder
           [
             'name' => 'Tester2',
             'password' => bcrypt('password'),
+            'handle' => 'tester2',
           ],
         );
         User::updateOrCreate(
@@ -38,6 +41,7 @@ class DatabaseSeeder extends Seeder
           [
             'name' => 'Tester3',
             'password' => bcrypt('password'),
+            'handle' => 'tester3',
           ],
         );
         User::updateOrCreate(
@@ -45,6 +49,7 @@ class DatabaseSeeder extends Seeder
           [
             'name' => 'Tester4',
             'password' => bcrypt('password'),
+            'handle' => 'tester4',
           ],
         );
 

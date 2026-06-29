@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CommentReactionController;
 use App\Http\Controllers\Api\FollowController;
 use App\Http\Controllers\Api\MovieUploadController;
 use App\Http\Controllers\Api\TopicController;
+use App\Http\Controllers\Api\UserChannelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,9 @@ Route::get('/movies/{movie}/related', [MovieController::class, 'related']);
 // Follow get
 Route::get('/users/{user}/follow', [FollowController::class, 'show']);
 
+// Channel get
+Route::get('users/{user}/channel', [UserChannelController::class, 'show']);
+
 // Authentication required
 Route::middleware('auth:sanctum')->group(function () {
   // Comment post
@@ -63,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/users/{user}/follow',[FollowController::class, 'toggle']);
   // Following index
   Route::get('/me/following', [FollowController::class, 'index']);
+
 
 });
 
