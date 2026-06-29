@@ -6,6 +6,7 @@ import type { Movie } from "@/types/movie";
 import MovieCard from "@/components/MovieCard";
 import TopicBar from "@/components/TopicBar";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 type DashboardClientProps = {
   movies: Movie[]
@@ -13,13 +14,20 @@ type DashboardClientProps = {
 
 export default function DashboardClient({ movies }: DashboardClientProps) {
   const [selectedTopic, setSelectedTopic] = useState("すべて");
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get("keyword") ?? "";
 
-  const filteredMovies =
-    selectedTopic === "すべて"
-      ? movies
-      : movies.filter((movie) =>
-          movie.topics?.some((topic) => topic.name === selectedTopic),
-        );
+  const filteredMovies = movies.filter((movie) => {
+    const matchesTopic =
+      selectedTopic === "すべて" ||
+      movie.topics?.some((topic) => topic.name === selectedTopic);
+    
+    const matchesKeyword =
+      keyword === "" ||
+      movie.title.toLowerCase().includes(keyword.toLowerCase());
+    
+    return matchesTopic && matchesKeyword;
+  });
   
   return (
     <>

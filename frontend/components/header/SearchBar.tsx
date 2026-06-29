@@ -1,11 +1,31 @@
 // frontend/components/header/SearchBar.tsx
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AiOutlineSearch } from "react-icons/ai";
 
 export default function SearchBar() {
+  const [keyword, setKeyword] = useState("");
+  const router = useRouter();
+  
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    router.push(
+      `/dashboard?keyword=${encodeURIComponent(keyword.trim())}`,
+    );
+  }
+
   return (
-    <form className="flex w-full max-w-xl pt-1">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full max-w-xl pt-1"
+    >
       <input
         type="text"
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
         placeholder="検索"
         className="min-w-0 flex-1 rounded-l-full border border-slate-700 bg-slate-900 px-4 py-2 text-white outline-none"
       />
