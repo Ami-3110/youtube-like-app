@@ -3,18 +3,25 @@
 
 import { useState } from "react";
 import { Comment } from "@/types/comment";
+import { mediaUrl } from "@/lib/mediaUrl";
 import { createComment } from "@/lib/api/comments";
 
 type CommentFormProps = {
   movieId: string;
   parentId?: number | null;
   onAddComment: (comment: Comment) => void;
+  currentUser: {
+    id: number;
+    name: string;
+    avatar_path: string | null;
+  } | null;
 };
 
 export function CommentForm({
   movieId,
   parentId = null,
   onAddComment,
+  currentUser,
 }: CommentFormProps) {
   const [body, setBody] = useState("");
 
@@ -37,8 +44,16 @@ export function CommentForm({
 
   return (
     <form onSubmit={handleSubmit} className="mt-6 flex w-full gap-3">
-      <div className="flex size-9 items-center justify-center rounded-full bg-slate-500 text-sm font-bold">
-        A
+      <div className="flex shrink-0 size-9 items-center justify-center overflow-hidden rounded-full bg-slate-500 text-sm font-bold text-white">
+        {currentUser?.avatar_path ? (
+          <img
+            src={mediaUrl(currentUser.avatar_path)}
+            alt={currentUser.name}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+            currentUser?.name?.slice(0,1) ?? "A"
+        )}
       </div>
 
       <div className="flex-1">

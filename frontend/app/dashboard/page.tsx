@@ -2,6 +2,7 @@
 import type { Movie } from "@/types/movie";
 import MovieCard from "@/components/MovieCard";
 import Header from "@/components/header/Header";
+import TopicBar from "@/components/TopicBar";
 import Link from "next/link";
 
 async function getMovies(): Promise<Movie[]> {
@@ -22,6 +23,7 @@ export default async function DashboardPage() {
   return (
     <>
       <Header />
+      <TopicBar />
       <main className="min-h-screen flex-1 bg-gradient-to-b from-slate-950 to-sky-950 p-6">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {movies.map((movie) => (

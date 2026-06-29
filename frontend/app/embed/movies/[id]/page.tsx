@@ -1,5 +1,5 @@
 // frontend/app/embed/movie/[id]/page.tsx
-
+import { mediaUrl } from "@/lib/mediaUrl";
 import { MovieDetail } from "@/types/movie";
 
 async function getMovie(id: string): Promise<MovieDetail> {
@@ -26,7 +26,7 @@ export default async function EmbedMoviePage({ params }: Props) {
     <main className="flex min-h-screen items-center justify-center bg-black">
       {movie.movie_path && (
         <video controls className="w-full max-w-4xl bg-black">
-          <source src={movie.movie_path} type="video/mp4" />
+          <source src={mediaUrl(movie.movie_path)} type="video/mp4" />
         </video>
       )}
     </main>

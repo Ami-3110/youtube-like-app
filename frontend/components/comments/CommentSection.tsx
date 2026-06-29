@@ -14,12 +14,16 @@ type CommentSectionProps = {
 
 export function CommentSection({ movieId, comments }: CommentSectionProps) {
   const [commentList, setCommentList] = useState(comments);
-  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
-
+  const [currentUser, setCurrentUser] = useState<{
+    id: number;
+    name: string;
+    avatar_path: string | null;
+  } | null>(null);
+  
   useEffect(() => {
     async function fetchCurrentUser() {
       const user = await getCurrentUser();
-      setCurrentUserId(user?.id ?? null);
+      setCurrentUser(user ?? null);
     }
 
     fetchCurrentUser();
@@ -56,7 +60,11 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
       </h2>
 
       <div className="mt-6 flex gap-3">
-        <CommentForm movieId={movieId} onAddComment={handleAddComment} />
+        <CommentForm
+          movieId={movieId}
+          onAddComment={handleAddComment}
+          currentUser={currentUser}
+        />
       </div>
 
       <div className="mt-2 space-y-3">
@@ -72,7 +80,8 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
                 <CommentItem
                   comment={comment}
                   movieId={movieId}
-                  currentUserId={currentUserId}
+                  currentUserId={currentUser?.id ?? null}
+                  currentUser={currentUser}
                   onUpdate={handleUpdateComment}
                   onDelete={handleDeleteComment}
                   onAddComment={handleAddComment}
@@ -84,7 +93,8 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
                       key={reply.id}
                       comment={reply}
                       movieId={movieId}
-                      currentUserId={currentUserId}
+                      currentUserId={currentUser?.id ?? null}
+                      currentUser={currentUser}
                       onUpdate={handleUpdateComment}
                       onDelete={handleDeleteComment}
                       onAddComment={handleAddComment}

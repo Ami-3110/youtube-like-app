@@ -7,6 +7,7 @@ import { formatRelativeTime } from "@/utils/formatRelativeTime";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { deleteComment, updateComment } from "@/lib/api/comments";
+import { mediaUrl } from "@/lib/mediaUrl";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import CommentReactionButtons from "./CommentReactionButtons";
 import { CommentForm } from "./CommentForm";
@@ -15,6 +16,11 @@ type CommentItemProps = {
   comment: Comment;
   movieId: string;
   currentUserId: number | null;
+  currentUser: {
+    id: number;
+    name: string;
+    avatar_path: string | null;
+  } | null;
   onUpdate: (UpdatedComment: Comment) => void;
   onDelete: (commentId: number) => void;
   onAddComment: (comment: Comment) => void;
@@ -24,6 +30,7 @@ export function CommentItem({
   comment,
   movieId,
   currentUserId,
+  currentUser,
   onUpdate,
   onDelete,
   onAddComment,
@@ -97,7 +104,7 @@ export function CommentItem({
             <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-sky-500 text-sm font-bold text-white">
               {comment.user.avatar_path ? (
                 <img
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${comment.user.avatar_path}`}
+                  src={mediaUrl(comment.user.avatar_path)}
                   alt={comment.user.name}
                   className="h-full w-full rounded-full object-cover"
                 />
@@ -212,6 +219,7 @@ export function CommentItem({
             <CommentForm
               movieId={movieId}
               parentId={comment.id}
+              currentUser={currentUser}
               onAddComment={(newComment) => {
                 onAddComment(newComment);
                 setIsReplyFormOpen(false);
