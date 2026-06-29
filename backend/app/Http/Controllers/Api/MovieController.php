@@ -25,7 +25,10 @@ class MovieController extends Controller
                 'title' => $movie->title,
                 'user' => $movie->user->name,
                 'thumbnail_path' => $movie->thumbnail_path,
-                'topics' => $movie->topics->pluck('name'),
+                'topics' => $movie->topics->map(fn ($topic) => [
+                  'id' => $topic->id,
+                  'name' => $topic->name,
+                ])->values(),
                 'views' => $movie->views,
                 'created_at' => $movie->created_at,
               ];
@@ -63,7 +66,10 @@ class MovieController extends Controller
           ],
           'movie_path' => $movie->movie_path,
           'thumbnail_path' => $movie->thumbnail_path,
-          'topics' => $movie->topics->pluck('name'),
+          'topics' => $movie->topics->map(fn ($topic) => [
+            'id' => $topic->id,
+            'name' => $topic->name,
+          ])->values(),
           'views' => $movie->views,
           'created_at' => $movie->created_at,
         ];

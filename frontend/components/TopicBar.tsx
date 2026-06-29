@@ -4,8 +4,13 @@
 import { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
+type TopicBarProps = {
+  selectedTopic: string;
+  onSelectTopic: (topic: string) => void;
+};
+
 const topics = [
-  "全て",
+  "すべて",
   "イカ",
   "ウミウシ",
   "カメ",
@@ -25,7 +30,10 @@ const topics = [
   "哺乳類",
 ];
 
-export default function TopicBar() {
+export default function TopicBar({
+  selectedTopic,
+  onSelectTopic,
+}: TopicBarProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -82,8 +90,9 @@ export default function TopicBar() {
           <button
             key={topic}
             type="button"
+            onClick={() => onSelectTopic(topic)}
             className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold ${
-              index === 0
+              selectedTopic === topic
                 ? "bg-slate-300 text-slate-950"
                 : "bg-slate-800 text-slate-300 hover:bg-slate-700"
             }`}

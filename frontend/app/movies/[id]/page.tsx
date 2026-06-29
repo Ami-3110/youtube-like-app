@@ -42,10 +42,7 @@ export default async function MovieDetailPage({
         <section className="min-w-0 flex-1">
           {movie.movie_path && (
             <video controls className="w-full rounded-xl bg-black">
-              <source
-                src={mediaUrl(movie.movie_path)}
-                type="video/mp4"
-              />
+              <source src={mediaUrl(movie.movie_path)} type="video/mp4" />
             </video>
           )}
           <h1 className="mt-4 text-2xl font-bold text-white">{movie.title}</h1>
@@ -76,24 +73,22 @@ export default async function MovieDetailPage({
 
             <div className="flex items-center gap-2 text-sm font-bold">
               <MovieReactionButtons movieId={movie.id} />
-              <ShareButton
-                movieId={movie.id}
-                title={movie.title} />
+              <ShareButton movieId={movie.id} title={movie.title} />
             </div>
           </div>
 
           <div className="mt-4 rounded-xl bg-slate-800 p-4 text-sm">
-            <p className="font-bold">
+            <div className="font-bold">
               <span>{movie.views.toLocaleString()} 回視聴 </span>
               <span>
                 {new Date(movie.created_at).toLocaleDateString("ja-JP")}
               </span>
-              <span className="mt-2">
-                {movie.topics.map((topic) => (
-                  <span key={topic}> #{topic} </span>
-                ))}
-              </span>
-            </p>
+              {movie.topics.map((topic) => (
+                <span key={topic.id} className="mr-1">
+                  #{topic.name}
+                </span>
+              ))}
+            </div>
 
             <p className="mt-2 leading-relaxed">
               {movie.description ?? "No description."}
@@ -101,7 +96,6 @@ export default async function MovieDetailPage({
           </div>
 
           <CommentSection movieId={id} comments={comments} />
-
         </section>
 
         <aside className="hidden w-90 shrink-0 lg:block">
@@ -109,7 +103,7 @@ export default async function MovieDetailPage({
             <p className="font-bold">おすすめ動画</p>
             <RelatedMovies
               movieId={movie.id}
-              topics={movie.topics}
+              topics={movie.topics.map((topic) => topic.name)}
             />
           </div>
         </aside>

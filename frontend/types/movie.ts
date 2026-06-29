@@ -1,11 +1,12 @@
 // frontend/app/types/movie.ts
+import type { Topic } from "./topic";
 
 export type Movie = {
   id: number;
   title: string;
   user: string;
   thumbnail_path: string | null;
-  topics: string[];
+  topics: Topic[];
   views: number;
   created_at: string;
 };
@@ -21,7 +22,7 @@ export type MovieDetail = {
   };
   movie_path: string | null;
   thumbnail_path: string | null;
-  topics: string[];
+  topics: Topic[];
   views: number;
   created_at: string;
 };
