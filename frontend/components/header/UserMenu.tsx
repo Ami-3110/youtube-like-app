@@ -10,8 +10,13 @@ import { useRouter } from "next/navigation";
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const [userName, setUserName] = useState("");
-  const [avatarPath, setAvatarPath] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<{
+    id: number;
+    name: string;
+    handle: string | null;
+    avatar_path: string | null;
+    is_admin: boolean;
+  } | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   async function handleLogout() {
@@ -29,11 +34,7 @@ export default function UserMenu() {
   useEffect(() => {
     async function fetchUser() {
       const user = await getCurrentUser();
-
-      if (user) {
-        setUserName(user.name);
-        setAvatarPath(user.avatar_path);
-      }
+      setCurrentUser(user);
     }
 
     fetchUser();
@@ -77,16 +78,16 @@ export default function UserMenu() {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-sky-500 font-bold text-white"
       >
-        {avatarPath ? (
+        {currentUser?.avatar_path ? (
           <Image
-            src={mediaUrl(avatarPath)}
-            alt={userName}
+            src={mediaUrl(currentUser.avatar_path)}
+            alt={currentUser.name}
             width={40}
             height={40}
             className="h-full w-full rounded-full object-cover"
           />
-        ) : userName ? (
-          userName.charAt(0).toUpperCase()
+        ) : currentUser?.name ? (
+          currentUser.name.charAt(0).toUpperCase()
         ) : (
           "?"
         )}
@@ -95,9 +96,19 @@ export default function UserMenu() {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 rounded-xl bg-slate-900 p-2 shadow-lg ring-1 ring-slate-700">
           <div className="border-b border-slate-700 px-4 py-3">
-            <p className="text-sm font-semibold text-white">{userName}</p>
-            <p className="text-sm text-slate-400">いずれhandle</p>
-            <p className="text-sm text-sky-500 mt-2">チャンネルを表示</p>
+            <p className="text-sm font-semibold text-white">{currentUser?.name}</p>
+            <p className="text-sm text-slate-400">@{currentUser?.handle}</p>
+            <button
+              type="button"
+              onClick={() => {
+                if (!currentUser) return;
+                setIsOpen(false);
+                router.push(`/channel/${currentUser.id}`);
+              }}
+              className="mt-2 text-sm text-sky-500 hover:text-sky-400"
+            >
+              チャンネルを表示
+            </button>
           </div>
 
           <button

@@ -10,6 +10,7 @@ import Header from "@/components/header/Header";
 import RelatedMovies from "@/components/relatedMovies/RelatedMovies";
 import FollowButton from "@/components/channel/FollowButton";
 import SubscriberCount from "@/components/channel/SubscriberCount";
+import Link from "next/link";
 
 async function getMovie(id: string): Promise<MovieDetail> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, {
@@ -45,7 +46,10 @@ export default async function MovieDetailPage({
           <h1 className="mt-4 text-2xl font-bold text-white">{movie.title}</h1>
 
           <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-3">
+            <Link
+              href={`/channel/${movie.user.id}`}
+              className="flex items-center gap-3"
+            >
               <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-emerald-500 font-bold text-black">
                 {movie.user.avatar_path ? (
                   <Image
@@ -66,7 +70,7 @@ export default async function MovieDetailPage({
               </div>
 
               <FollowButton userId={movie.user.id} />
-            </div>
+            </Link>
 
             <div className="flex items-center gap-2 text-sm font-bold">
               <MovieReactionButtons movieId={movie.id} />
