@@ -21,4 +21,8 @@ Laravel + Next.jsで作成したYouTubeライクアプリ
 * デザイン切り替え（deep sea / coral sea）
 * currentUserとcurrentUserIdが重複してる（Ownerんとこ）→切り出し？
 * @media対応
-* 
+* 管理者画面
+1. Topic管理
+2. ユーザー権限管理
+3. 全動画の編集・削除
+4. コメント削除

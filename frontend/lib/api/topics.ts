@@ -1,4 +1,4 @@
-// frontend/libn/api/topics.ts
+// frontend/lib/api/topics.ts
 import type { Topic } from "@/types/topic";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
