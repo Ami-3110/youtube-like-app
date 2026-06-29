@@ -69,12 +69,12 @@ export default function TopicBar({
   }, [topics]);
   
   return (
-    <div className="relative bg-slate-950 px-5 py-3">
+    <div className="relative bg-sky-950 px-5 py-3">
       {canScrollLeft && (
         <button
           type="button"
           onClick={() => scrollTopics("left")}
-          className="absolute left-0 top-1/2 z-20 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-slate-950 text-slate-300 hover:bg-slate-800"
+          className="absolute left-0 top-1/2 z-20 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border-slate-300 bg-slate-950 text-slate-300 hover:bg-slate-800"
         >
           <FiChevronLeft size={22} />
         </button>
@@ -89,7 +89,7 @@ export default function TopicBar({
           onClick={() => onSelectTopic("すべて")}
           className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold ${
             selectedTopic === "すべて"
-              ? "bg-white text-slate-950"
+              ? "bg-slate-300 text-slate-950"
               : "bg-slate-800 text-slate-300 hover:bg-slate-700"
           }`}
         >
@@ -101,7 +101,7 @@ export default function TopicBar({
             key={topic.id}
             type="button"
             onClick={() => onSelectTopic(topic.name)}
-            className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold ${
+            className={`shrink-0 rounded-lg border border-slate-600 px-4 py-2 text-sm font-bold ${
               selectedTopic === topic.name
                 ? "bg-slate-300 text-slate-950"
                 : "bg-slate-800 text-slate-300 hover:bg-slate-700"

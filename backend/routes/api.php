@@ -61,7 +61,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // Follow post
   Route::post('/users/{user}/follow',[FollowController::class, 'toggle']);
-
+  // Following index
+  Route::get('/me/following', [FollowController::class, 'index']);
 
 });
 

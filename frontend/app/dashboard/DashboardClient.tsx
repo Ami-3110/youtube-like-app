@@ -36,7 +36,7 @@ export default function DashboardClient({ movies }: DashboardClientProps) {
         onSelectTopic={setSelectedTopic}
       />
 
-      <main className="min-h-screen flex-1 bg-linier-to-b from-sky-950 to-slate-950 p-6">
+      <main className="min-h-screen flex-1 bg-linear-to-b from-sky-950 to-slate-950 p-6">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredMovies.map((movie) => (
             <Link key={movie.id} href={`/movies/${movie.id}`}>

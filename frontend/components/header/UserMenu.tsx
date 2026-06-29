@@ -100,7 +100,14 @@ export default function UserMenu() {
             <p className="text-sm text-sky-500 mt-2">チャンネルを表示</p>
           </div>
 
-          <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(false);
+              router.push("/subscriptions");
+            }}
+            className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800"
+          >
             登録チャンネル
           </button>
           <div className="my-1 border-b border-slate-700" />

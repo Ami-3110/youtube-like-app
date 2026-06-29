@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class FollowController extends Controller
 {
+    public function index(Request $request)
+    {
+      $currentUser = $request->user();
+
+      $followings = $currentUser->followings()
+        ->select('users.id', 'users.name', 'users.avatar_path')
+        ->get();
+
+      return response()->json($followings);
+    }
+
     public function show(Request $request, User $user)
     {
       $currentUser = $request->user();

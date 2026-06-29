@@ -8,7 +8,7 @@ Laravel + Next.jsで作成したYouTubeライクアプリ
 3. フォロー（チャンネル登録）
 4. 共有☑️
 5. ヘッダー☑️
-6. トピックバー
+6. トピックバー☑️
 7. リコメンドサイドバー☑️
 
 * ダミーデータの画像パスを /storage/... に統一
@@ -21,6 +21,7 @@ Laravel + Next.jsで作成したYouTubeライクアプリ
 * デザイン切り替え（deep sea / coral sea）
 * currentUserとcurrentUserIdが重複してる（Ownerんとこ）→切り出し？
 * @media対応
+* SSO対応
 * 管理者画面
 1. Topic管理
 2. ユーザー権限管理
