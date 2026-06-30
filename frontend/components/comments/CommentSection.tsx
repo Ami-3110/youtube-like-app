@@ -1,11 +1,11 @@
 // frontend/components/comments/CommentSection.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Comment } from "@/types/comment";
 import { CommentItem } from "./CommentItem";
 import { CommentForm } from "./CommentForm";
-import { getCurrentUser } from "@/lib/api/auth";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 type CommentSectionProps = {
   movieId: string;
@@ -14,20 +14,7 @@ type CommentSectionProps = {
 
 export function CommentSection({ movieId, comments }: CommentSectionProps) {
   const [commentList, setCommentList] = useState(comments);
-  const [currentUser, setCurrentUser] = useState<{
-    id: number;
-    name: string;
-    avatar_path: string | null;
-  } | null>(null);
-  
-  useEffect(() => {
-    async function fetchCurrentUser() {
-      const user = await getCurrentUser();
-      setCurrentUser(user ?? null);
-    }
-
-    fetchCurrentUser();
-  }, []);
+  const { currentUser } = useCurrentUser();
 
   function handleUpdateComment(updatedComment: Comment) {
     setCommentList((prevComments) =>

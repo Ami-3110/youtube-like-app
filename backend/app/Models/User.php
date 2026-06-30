@@ -24,6 +24,7 @@ class User extends Authenticatable
         'avatar_path',
         'avatar_original_path',
         'is_admin',
+        'bio',
     ];
 
     protected $hidden = [

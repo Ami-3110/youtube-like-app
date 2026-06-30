@@ -4,19 +4,14 @@
 import Image from "next/image";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { useEffect, useRef, useState } from "react";
-import { getCurrentUser, logout } from "@/lib/api/auth";
+import { logout } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<{
-    id: number;
-    name: string;
-    handle: string | null;
-    avatar_path: string | null;
-    is_admin: boolean;
-  } | null>(null);
+  const { currentUser } = useCurrentUser();
   const menuRef = useRef<HTMLDivElement>(null);
 
   async function handleLogout() {
@@ -30,15 +25,6 @@ export default function UserMenu() {
       alert("ログアウトに失敗しました");
     }
   }
-
-  useEffect(() => {
-    async function fetchUser() {
-      const user = await getCurrentUser();
-      setCurrentUser(user);
-    }
-
-    fetchUser();
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -129,7 +115,14 @@ export default function UserMenu() {
             <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
               デザイン: Deep Sea
             </button>
-            <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                router.push(`/channel/${currentUser.id}?edit=true`);
+              }}
+              className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800"
+            >
               設定
             </button>
             <div className="my-1 border-b border-slate-700" />

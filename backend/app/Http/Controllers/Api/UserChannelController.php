@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserChannelController extends Controller
 {
@@ -17,6 +16,7 @@ class UserChannelController extends Controller
         'id' => $user->id,
         'name' => $user->name,
         'handle' => $user->handle,
+        'bio' => $user->bio,
         'avatar_path' => $user->avatar_path,
         'followers_count' => $user->followers()->count(),
 

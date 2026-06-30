@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\FollowController;
 use App\Http\Controllers\Api\MovieUploadController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserChannelController;
+use App\Http\Controllers\Api\ProfileController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +45,7 @@ Route::get('/movies/{movie}/related', [MovieController::class, 'related']);
 Route::get('/users/{user}/follow', [FollowController::class, 'show']);
 
 // Channel get
-Route::get('users/{user}/channel', [UserChannelController::class, 'show']);
+Route::get('/users/{user}/channel', [UserChannelController::class, 'show']);
 
 // Authentication required
 Route::middleware('auth:sanctum')->group(function () {
@@ -68,6 +70,9 @@ Route::middleware('auth:sanctum')->group(function () {
   // Following index
   Route::get('/me/following', [FollowController::class, 'index']);
 
-
+  // Channel edit
+  Route::patch('/me/profile',[ProfileController::class, 'update']);
+  // Channel delete
+  Route::delete('/me/profile',[ProfileController::class, 'destroy']);
 });
 
