@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/api/auth";
 type CurrentUser = {
   id: number;
   name: string;
+  email: string;
   handle: string | null;
   avatar_path: string | null;
   is_admin: boolean;

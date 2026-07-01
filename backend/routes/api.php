@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\MovieUploadController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserChannelController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\AccountController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -76,7 +77,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // Channel edit
   Route::patch('/me/profile',[ProfileController::class, 'update']);
-  // Channel delete
-  Route::delete('/me/profile',[ProfileController::class, 'destroy']);
+
+
+  // Email edit
+  Route::patch('me/email',[AccountController::class, 'updateEmail']);
+  // Password edit
+  Route::patch('me/password',[AccountController::class, 'updatePassword']);
+  // Account delete
+  Route::delete('/me/account',[AccountController::class, 'destroy']);
+  
 });
 

@@ -35,14 +35,4 @@ class ProfileController extends Controller
       ]);
     }
 
-    public function destroy(Request $request)
-    {
-      $user = $request->user();
-
-      $user->delete();
-
-      return response()->json([
-        'message' => 'Account deleted',
-      ]);
-    }
 }

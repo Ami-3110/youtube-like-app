@@ -28,24 +28,3 @@ export async function updateProfile(
 
   return res.json();
 }
-
-export async function deleteProfile() {
-  await getCsrfCookie();
-
-  const token = getCookie("XSRF-TOKEN");
-
-  const res = await fetch(`${API_BASE_URL}/me/profile`, {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "X-XSRF-TOKEN": token,
-    },
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to delete account");
-  }
-
-  return res.json();
-}

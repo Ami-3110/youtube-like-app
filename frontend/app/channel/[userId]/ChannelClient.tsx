@@ -9,10 +9,9 @@ import MovieCard from "@/components/MovieCard";
 import FollowButton from "@/components/channel/FollowButton";
 import SubscriberCount from "@/components/channel/SubscriberCount";
 import { mediaUrl } from "@/lib/mediaUrl";
-import { updateProfile, deleteProfile } from "@/lib/api/profile";
+import { updateProfile } from "@/lib/api/profile";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ConfirmModal } from "@/components/ui/ConfirmModal";
 
 type Props = {
   channel: Channel;
@@ -62,17 +61,6 @@ export default function ChannelClient({ channel }: Props) {
     } catch (error) {
       console.error(error);
       alert("プロフィールの更新に失敗しました");
-    }
-  }
-
-  async function handleDeleteAccount() {
-    try {
-      await deleteProfile();
-
-      router.push("/dashboard");
-    } catch (error) {
-      console.error(error);
-      alert("アカウント削除に失敗しました");
     }
   }
 
@@ -152,16 +140,6 @@ export default function ChannelClient({ channel }: Props) {
                         キャンセル
                       </button>
                     </div>
-
-                    <div className="mt-8 flex justify-end border-t border-slate-700 pt-6">
-                      <button
-                        type="button"
-                        onClick={() => setIsDeleteModalOpen(true)}
-                        className="rounded-full px-5 py-2 bg-red-700 text-sm font-semibold text-red-400 hover:bg-red-950"
-                      >
-                        アカウント削除
-                      </button>
-                    </div>
                   </div>
                 ) : (
                   <>
@@ -228,13 +206,6 @@ export default function ChannelClient({ channel }: Props) {
             </div>
           </div>
         </section>
-        <ConfirmModal
-          isOpen={isDeleteModalOpen}
-          title="アカウント削除"
-          message="本当にアカウントを削除しますか？この操作は取消できません。"
-          onConfirm={handleDeleteAccount}
-          onCancel={() => setIsDeleteModalOpen(false)}
-        />
       </main>
     </>
   );

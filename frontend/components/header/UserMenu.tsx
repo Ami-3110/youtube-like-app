@@ -119,11 +119,11 @@ export default function UserMenu() {
               type="button"
               onClick={() => {
                 setIsOpen(false);
-                router.push(`/channel/${currentUser.id}?edit=true`);
+                router.push("/account/settings");
               }}
               className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800"
             >
-              設定
+              アカウント設定
             </button>
             <div className="my-1 border-b border-slate-700" />
             <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
