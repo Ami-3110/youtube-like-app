@@ -1,7 +1,7 @@
 // frontend/app/channel/[userId]/ChannelClient.tsx
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import type { Channel } from "@/types/channel";
 import Link from "next/link";
@@ -27,8 +27,13 @@ export default function ChannelClient({ channel }: Props) {
   const [name, setName] = useState(channel.name);
   const [handle, setHandle] = useState(channel.handle ?? "");
   const [bio, setBio] = useState(channel.bio ?? "");
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState(
+    channel.avatar_path ? mediaUrl(channel.avatar_path) : "",
+  );
+  const avatarInputRef = useRef<HTMLInputElement | null>(null);
+
   const [sortBy, setSortBy] = useState("newest");
   const sortedMovies = [...channel.movies].sort((a, b) => {
     switch (sortBy) {
@@ -48,14 +53,29 @@ export default function ChannelClient({ channel }: Props) {
         );
     }
   });
+  function handleAvatarFile(file: File) {
+    if (!file.type.startsWith("image/")) {
+      alert("画像ファイルを選択してください");
+      return;
+    }
+
+    setAvatarFile(file);
+    setAvatarPreviewUrl(URL.createObjectURL(file));
+  }
 
   async function handleSave() {
     try {
-      await updateProfile({
-        name,
-        handle,
-        bio,
-      });
+      const formData = new FormData();
+      
+        formData.append("name", name);
+        formData.append("handle", handle);
+        formData.append("bio", bio);
+
+        if (avatarFile) {
+          formData.append("avatar", avatarFile);
+        }
+      
+      await updateProfile(formData);
       
       router.push(`/channel/${channel.id}`);
     } catch (error) {
@@ -70,10 +90,31 @@ export default function ChannelClient({ channel }: Props) {
         <section className="mx-auto max-w-5xl">
           <div className="mx-auto flex max-w-4xl items-center gap-8 pb-6">
             <div className="flex flex-1 items-center gap-5">
-              <div className="flex size-24 items-center justify-center overflow-hidden rounded-full bg-emerald-500 text-3xl font-bold text-black">
-                {channel.avatar_path ? (
+              <input
+                ref={avatarInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    handleAvatarFile(file);
+                  }
+                }}
+              />
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (isEditing && isOwnChannel) {
+                    avatarInputRef.current?.click();
+                  }
+                }}
+                className="group relative flex size-24 items-center justify-center overflow-hidden rounded-full bg-emerald-500 text-3xl font-bold text-black"
+              >
+                {avatarPreviewUrl ? (
                   <Image
-                    src={mediaUrl(channel.avatar_path)}
+                    src={avatarPreviewUrl}
                     alt={channel.name}
                     width={96}
                     height={96}
@@ -82,7 +123,23 @@ export default function ChannelClient({ channel }: Props) {
                 ) : (
                   channel.name.slice(0, 1)
                 )}
-              </div>
+
+                {isEditing && isOwnChannel && (
+                  <span
+                    className="
+                    absolute inset-0
+                    flex items-center justify-center
+                    rounded-full
+                    bg-black/60
+                    text-xs font-bold text-white
+                    opacity-0 transition-opacity
+                    group-hover:opacity-100
+                    "
+                  >
+                    画像変更
+                  </span>
+                )}
+              </button>
 
               <div className="flex-1">
                 {isEditing && isOwnChannel ? (

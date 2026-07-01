@@ -80,9 +80,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
   // Email edit
-  Route::patch('me/email',[AccountController::class, 'updateEmail']);
+  Route::patch('/me/email',[AccountController::class, 'updateEmail']);
   // Password edit
-  Route::patch('me/password',[AccountController::class, 'updatePassword']);
+  Route::patch('/me/password',[AccountController::class, 'updatePassword']);
   // Account delete
   Route::delete('/me/account',[AccountController::class, 'destroy']);
   

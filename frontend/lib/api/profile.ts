@@ -4,22 +4,19 @@ import type { UpdateProfileRequest } from "@/types/profile";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function updateProfile(
-  data: UpdateProfileRequest,
-) {
+export async function updateProfile(formData: FormData) {
   await getCsrfCookie();
 
-  const token = getCookie("XSRF-TOKEN");
+  const token = decodeURIComponent(getCookie("XSRF-TOKEN") ?? "");
 
   const res = await fetch(`${API_BASE_URL}/me/profile`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
       Accept: "application/json",
       "X-XSRF-TOKEN": token,
     },
     credentials: "include",
-    body: JSON.stringify(data),
+    body: formData,
   });
   
   if (!res.ok) {
