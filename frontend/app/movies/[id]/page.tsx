@@ -5,24 +5,13 @@ import { getComments } from "@/lib/api/comments";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { ShareButton } from "@/components/movies/ShareButton";
 import MovieReactionButtons from "@/components/movies/MovieReactionButtons";
-import type { MovieDetail } from "@/types/movie";
 import Header from "@/components/header/Header";
 import RelatedMovies from "@/components/relatedMovies/RelatedMovies";
 import FollowButton from "@/components/channel/FollowButton";
 import SubscriberCount from "@/components/channel/SubscriberCount";
 import Link from "next/link";
-
-async function getMovie(id: string): Promise<MovieDetail> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch movie");
-  }
-
-  return res.json();
-}
+import { getMovie } from "@/lib/api/movies";
+import MovieActionButtons from "@/components/movies/MovieActionButtons"
 
 export default async function MovieDetailPage({
   params,
@@ -43,7 +32,13 @@ export default async function MovieDetailPage({
               <source src={mediaUrl(movie.movie_path)} type="video/mp4" />
             </video>
           )}
-          <h1 className="mt-4 text-2xl font-bold text-white">{movie.title}</h1>
+          <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <h1 className=" text-2xl font-bold text-white">{movie.title}</h1>
+            <MovieActionButtons
+              movieId={movie.id}
+              ownerId={movie.user.id}
+            />
+          </div>
 
           <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <Link

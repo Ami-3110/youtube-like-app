@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Psr\Log\NullLogger;
 
 class MovieUploadController extends Controller
 {
@@ -43,6 +44,75 @@ class MovieUploadController extends Controller
       return response()->json($movie, 201);
     }
 
+    public function update(Request $request, Movie $movie)
+    {
+       if ($movie->user_id !== $request->user()->id) {
+        abort(403);
+       }
+
+       $validated = $request->validate([
+        'title' => ['required', 'string', 'max:255'],
+        'description' => ['nullable', 'string'],
+        'movie' => ['nullable', 'file', 'mimes:mp4,mov,avi,webm', 'max:102400'],
+        'thumbnail' => ['nullable', 'image', 'max:5120'],
+        'topic_ids' => ['nullable', 'array'],
+        'topic_ids.*' => ['integer', 'exists:topics,id']
+       ]);
+
+       if ($request->hasFile('movie')){
+        if($movie->movie_path) {
+          Storage::disk('public')->delete(str_replace('/storage/', '', $movie->movie_path));
+        }
+
+        $moviePath = $request->file('movie')->store('movies', 'public');
+        $movie->movie_path = '/storage/' . $moviePath;
+
+        if(!$request->hasFile('thumbnail')){
+          $thumbnailPath = $this->generateThumbnail($moviePath);
+          $movie->thumbnail_path = $thumbnailPath ? '/storage/' . $thumbnailPath : null;
+          }
+       }
+
+       if ($request->hasFile('thumbnail')){
+        if($movie->thumbnail_path){
+          Storage::disk('public')->delete(str_replace('/storage/', '', $movie->thumbnail_path));
+        }
+
+        $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+        $movie->thumbnail_path = '/storage/' . $thumbnailPath;
+       }
+
+       $movie->title= $validated['title'];
+       $movie->description = $validated['description'] ?? null;
+       $movie->save();
+
+       $movie->topics()->sync($validated['topic_ids'] ?? []);
+
+       return response()->json($movie->load('topics'));
+    }
+
+    public function destroy(Request $request, Movie $movie)
+    {
+      if ($movie->user_id !== $request->user()->id) {
+        abort(403);
+      }
+
+      if ($movie->movie_path) {
+        Storage::disk('public')->delete(str_replace('/storage/', '', $movie->movie_path));
+      }
+
+      if ($movie->thumbnail_path) {
+        Storage::disk('public')->delete(str_replace('/storage/', '', $movie->thumbnail_path));
+      }
+
+      $movie->topics()->detach();
+
+      $movie->delete();
+
+      return response()->json([
+        'message' => '動画を削除しました',
+      ]);
+    }
 
     private function generateThumbnail(string $moviePath): string
     {

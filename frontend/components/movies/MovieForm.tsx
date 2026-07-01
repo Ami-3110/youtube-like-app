@@ -3,25 +3,33 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { uploadMovie } from "@/lib/api/movies";
+import { uploadMovie, updateMovie } from "@/lib/api/movies";
 import { getTopics } from "@/lib/api/topics";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import type { Topic } from "@/types/topic";
+import type { MovieDetail } from "@/types/movie";
 
-export default function MovieForm() {
+type Props = {
+  initialMovie?: MovieDetail;
+};
+
+export default function MovieForm({ initialMovie }: Props) {
+  const isEditMode = !!initialMovie;
   const videoInputRef = useRef<HTMLInputElement | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(initialMovie?.title ?? "");
+  const [description, setDescription] = useState(initialMovie?.description ?? "");
   const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [videoPreviewUrl, setVideoPreviewUrl] = useState(""); 
+  const [videoPreviewUrl, setVideoPreviewUrl] = useState(initialMovie?.movie_path ?? "");
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
-  const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState("");
+  const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState(initialMovie?.thumbnail_path ?? "");
   const router = useRouter();
   const [topics, setTopics] = useState<Topic[]>([]);
-  const [selectedTopicIds, setSelectedTopicIds] = useState<number[]>([]);
-
+  const [selectedTopicIds, setSelectedTopicIds] = useState<number[]>(
+    initialMovie?.topics?.map((topic) => topic.id) ?? []
+  );
+  
   useEffect(() => {
     async function fetchTopics() {
       try {
@@ -140,7 +148,7 @@ export default function MovieForm() {
       return;
     }
 
-    if (!videoFile) {
+    if (!isEditMode && !videoFile) {
       alert("動画ファイルを選択してください");
       return;
     }
@@ -148,7 +156,9 @@ export default function MovieForm() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("movie", videoFile);
+    if (videoFile) {
+      formData.append("movie", videoFile);
+    }
 
     if (thumbnailFile) {
       formData.append("thumbnail", thumbnailFile);
@@ -159,8 +169,11 @@ export default function MovieForm() {
     });
 
     try {
-      const result = await uploadMovie(formData);
-      alert("動画を投稿しました");
+      const result = isEditMode
+        ? await updateMovie(initialMovie.id, formData)
+        : await uploadMovie(formData);
+      
+      alert(isEditMode ? "動画を更新しました" : "動画を投稿しました");
 
       router.push(`/movies/${result.id}`);
     } catch (error) {
@@ -173,9 +186,12 @@ export default function MovieForm() {
     <form onSubmit={handleSubmit}>
       <div className="w-full max-w-6xl rounded-xl bg-slate-900 p-5 text-white shadow-xl">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold">動画を投稿</h2>
+          <h2 className="text-lg font-bold">
+            {isEditMode ? "動画を編集" : "動画を投稿"}
+          </h2>
           <button
             type="button"
+            onClick={() => router.back()}
             className="rounded-full px-3 py-1 text-2xl text-slate-300 hover:bg-slate-800"
           >
             ×
@@ -369,7 +385,7 @@ export default function MovieForm() {
             type="submit"
             className="rounded-full bg-slate-400 px-4 py-2 text-sm text-slate-900 hover:bg-slate-300"
           >
-            投稿
+            {isEditMode ? "更新" : "投稿"}
           </button>
         </div>
       </div>

@@ -62,8 +62,12 @@ Route::middleware('auth:sanctum')->group(function () {
   // CommentReaction post
   Route::post('/comments/{comment}/reactions',[CommentReactionController::class, 'toggle']);
 
-  //MovieUpload
+  //Movie Upload
   Route::post('/movies', [MovieUploadController::class, 'store']);
+  //Movie Update
+  Route::patch('/movies/{movie}', [MovieUploadController::class, 'update']);
+  //Movie Delete
+  Route::delete('/movies/{movie}', [MovieUploadController::class, 'destroy']);
 
   // Follow post
   Route::post('/users/{user}/follow',[FollowController::class, 'toggle']);

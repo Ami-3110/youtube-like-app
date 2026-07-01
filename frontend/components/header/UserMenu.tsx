@@ -130,17 +130,18 @@ export default function UserMenu() {
               リクエスト
             </button>
 
-            {currentUser.is_admin && (
+            {Boolean(currentUser.is_admin) && (
               <>
                 <div className="my-1 border-b border-slate-700" />
-                
+
                 <button
                   type="button"
                   onClick={() => {
                     setIsOpen(false);
                     router.push("/admin");
                   }}
-                  className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800">
+                  className="w-full rounded-lg px-4 py-2 text-left text-sm text-white hover:bg-slate-800"
+                >
                   管理画面
                 </button>
               </>
