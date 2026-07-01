@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,20 @@ class ProfileController extends Controller
           Rule::unique('users', 'handle')->ignore($user->id),
         ],
         'bio' => ['nullable', 'string', 'max:1000'],
+        'avatar' => ['nullable', 'image', 'max:5120'],
       ]);
+      if ($request->hasFile('avatar')) {
+
+        if ($user->avatar_path) {
+            Storage::disk('public')->delete(
+                str_replace('/storage/', '', $user->avatar_path)
+            );
+        }
+
+        $avatarPath = $request->file('avatar')->store('avatars', 'public');
+
+        $validated['avatar_path'] = '/storage/' . $avatarPath;
+      }
 
       $user->update($validated);
 
@@ -34,5 +48,4 @@ class ProfileController extends Controller
         'is_admin' => $user->is_admin,
       ]);
     }
-
 }
