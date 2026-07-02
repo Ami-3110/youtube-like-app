@@ -1,4 +1,4 @@
-// frontend/components/header/NotigicationButton.tsx
+// 未使用です。frontend/components/header/NotigicationButton.tsx
 import { AiOutlineBell } from "react-icons/ai";
 
 export default function NotificationButton() {

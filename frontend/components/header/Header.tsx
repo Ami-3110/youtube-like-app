@@ -2,7 +2,7 @@
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import UploadButton from "./UploadButton";
-import NotificationButton from "./NotificationButton";
+// import NotificationButton from "./NotificationButton";
 import UserMenu from "./UserMenu";
 
 export default function Header() {
@@ -16,7 +16,8 @@ export default function Header() {
         <div className="justify-self-end md:order-3">
           <div className="flex items-center gap-4">
             <UploadButton />
-            <NotificationButton />
+            {/* 通知機能実装時に再度追加 */}
+            {/* <NotificationButton /> */}
             <UserMenu />
           </div>
         </div>
