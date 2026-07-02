@@ -86,6 +86,10 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function featureRequests(): HasMany
+    {
+        return $this->hasMany(FeatureRequest::class);
+    }
     /**
      * Get the attributes that should be cast.
      *
