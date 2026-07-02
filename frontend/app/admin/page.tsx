@@ -165,7 +165,7 @@ export default function AdminPage() {
       alert("トピックの削除に失敗しました");
     }
   }
-  
+
   if (!isCurrentUserLoading && !currentUser?.is_admin) {
     return null;
   }
@@ -188,77 +188,138 @@ export default function AdminPage() {
                 リクエストはありません。
               </p>
             ) : (
-              <div className="mt-4 overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead className="border-b border-slate-700 text-slate-400">
-                    <tr>
-                      <th className="px-3 py-2">送信日</th>
-                      <th className="px-3 py-2">ユーザー</th>
-                      <th className="px-3 py-2">種類</th>
-                      <th className="px-3 py-2">内容</th>
-                      <th className="px-3 py-2">ステータス</th>
-                    </tr>
-                  </thead>
+              <>
+                <div className="mt-4 hidden overflow-x-auto md:block">
+                  <table className="w-full text-left text-sm">
+                    <thead className="border-b border-slate-700 text-slate-400">
+                      <tr>
+                        <th className="px-3 py-2">送信日</th>
+                        <th className="px-3 py-2">ユーザー</th>
+                        <th className="px-3 py-2">種類</th>
+                        <th className="px-3 py-2">内容</th>
+                        <th className="px-3 py-2">ステータス</th>
+                      </tr>
+                    </thead>
 
-                  <tbody>
-                    {requests.map((request) => (
-                      <tr
-                        key={request.id}
-                        className="border-b border-slate-800 align-top"
-                      >
-                        <td className="px-3 py-3 text-slate-400">
-                          {new Date(request.created_at).toLocaleDateString(
-                            "ja-JP",
-                          )}
-                        </td>
+                    <tbody>
+                      {requests.map((request) => (
+                        <tr
+                          key={request.id}
+                          className="border-b border-slate-800 align-top"
+                        >
+                          <td className="px-3 py-3 text-slate-400">
+                            {new Date(request.created_at).toLocaleDateString(
+                              "ja-JP",
+                            )}
+                          </td>
 
-                        <td className="px-3 py-3">
-                          <p className="font-semibold">{request.user.name}</p>
+                          <td className="px-3 py-3">
+                            <p className="font-semibold">{request.user.name}</p>
+                            {request.user.handle && (
+                              <p className="text-xs text-slate-400">
+                                @{request.user.handle}
+                              </p>
+                            )}
+                          </td>
+
+                          <td className="px-3 py-3 font-semibold">
+                            {request.title}
+                          </td>
+
+                          <td className="px-3 py-3">
+                            <p className="whitespace-pre-wrap text-slate-300">
+                              {request.body}
+                            </p>
+
+                            {request.admin_comment && (
+                              <div className="mt-2 rounded-lg bg-slate-800 p-2 text-xs text-slate-300">
+                                管理者コメント: {request.admin_comment}
+                              </div>
+                            )}
+                          </td>
+
+                          <td className="px-3 py-3">
+                            <select
+                              value={request.status}
+                              onChange={(e) =>
+                                openStatusModal(
+                                  request,
+                                  e.target.value as FeatureRequestStatus,
+                                )
+                              }
+                              className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none"
+                            >
+                              {statuses.map((status) => (
+                                <option key={status} value={status}>
+                                  {statusLabels[status]}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="mt-4 space-y-4 md:hidden">
+                  {requests.map((request) => (
+                    <div
+                      key={request.id}
+                      className="rounded-xl border border-slate-700 bg-slate-950 p-4 text-sm"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="font-bold">{request.user.name}</p>
                           {request.user.handle && (
                             <p className="text-xs text-slate-400">
                               @{request.user.handle}
                             </p>
                           )}
-                        </td>
+                        </div>
 
-                        <td className="px-3 py-3 font-semibold">
-                          {request.title}
-                        </td>
+                        <p className="shrink-0 text-xs text-slate-400">
+                          {new Date(request.created_at).toLocaleDateString("ja-JP")}
+                        </p>
+                      </div>
 
-                        <td className="px-3 py-3">
-                          <p className="whitespace-pre-wrap text-slate-300">
-                            {request.body}
-                          </p>
+                      <p className="mt-3 font-bold text-sky-300">{request.title}</p>
 
-                          {request.admin_comment && (
-                            <div className="mt-2 rounded-lg bg-slate-800 p-2 text-xs text-slate-300">
-                              管理者コメント: {request.admin_comment}
-                            </div>
-                          )}
-                        </td>
+                      <p className="mt-2 whitespace-pre-wrap text-slate-300">
+                        {request.body}
+                      </p>
 
-                        <td className="px-3 py-3">
-                          <select
-                            value={request.status}
-                            onChange={(e) =>
-                              openStatusModal(
-                                request,
-                                e.target.value as FeatureRequestStatus,
-                              )
-                            }
-                            className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none"
-                          >
-                            {statuses.map((status) => (
-                              <option key={status} value={status}>
-                                {statusLabels[status]}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                      {request.admin_comment && (
+                        <div className="mt-3 rounded-lg bg-slate-800 p-2 text-xs text-slate-300">
+                          管理者コメント: {request.admin_comment}
+                        </div>
+                      )}
+
+                      <div className="mt-4">
+                        <label className="mb-1 block text-xs text-slate-400">
+                          ステータス
+                        </label>
+                        <select
+                          value={request.status}
+                          onChange={(e) =>
+                            openStatusModal(
+                              request,
+                              e.target.value as FeatureRequestStatus,
+                            )
+                          }
+                          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm outline-none"
+                        >
+                          {statuses.map((status) => (
+                            <option key={status} value={status}>
+                              {statusLabels[status]}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 <div className="mt-6 flex justify-center gap-3">
                   <button
                     disabled={page === 1}
@@ -280,7 +341,7 @@ export default function AdminPage() {
                     次へ →
                   </button>
                 </div>
-              </div>
+              </>
             )}
           </section>
 

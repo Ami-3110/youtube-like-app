@@ -15,7 +15,7 @@ export default function UploadButton() {
         className="flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-base text-white hover:bg-slate-700"
       >
         <AiOutlinePlus size={18} />
-        <span>作成</span>
+        <span className="hidden sm:inline">作成</span>
       </button>
     </div>
   );

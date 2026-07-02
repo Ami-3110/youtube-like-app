@@ -34,40 +34,39 @@ export default async function MovieDetailPage({
           )}
           <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <h1 className=" text-2xl font-bold text-white">{movie.title}</h1>
-            <MovieActionButtons
-              movieId={movie.id}
-              ownerId={movie.user.id}
-            />
+            <MovieActionButtons movieId={movie.id} ownerId={movie.user.id} />
           </div>
 
           <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <Link
-              href={`/channel/${movie.user.id}`}
-              className="flex items-center gap-3"
-            >
-              <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-emerald-500 font-bold text-black">
-                {movie.user.avatar_path ? (
-                  <Image
-                    src={mediaUrl(movie.user.avatar_path)}
-                    alt={movie.user.name}
-                    width={40}
-                    height={40}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  movie.user.name.slice(0, 1)
-                )}
-              </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href={`/channel/${movie.user.id}`}
+                className="flex items-center gap-3"
+              >
+                <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-emerald-500 font-bold text-black">
+                  {movie.user.avatar_path ? (
+                    <Image
+                      src={mediaUrl(movie.user.avatar_path)}
+                      alt={movie.user.name}
+                      width={40}
+                      height={40}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    movie.user.name.slice(0, 1)
+                  )}
+                </div>
 
-              <div>
-                <p className="font-bold">{movie.user.name}</p>
-                <SubscriberCount userId={movie.user.id} />
-              </div>
+                <div>
+                  <p className="font-bold">{movie.user.name}</p>
+                  <SubscriberCount userId={movie.user.id} />
+                </div>
+              </Link>
 
               <FollowButton userId={movie.user.id} />
-            </Link>
+            </div>
 
-            <div className="flex items-center gap-2 text-sm font-bold">
+            <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
               <MovieReactionButtons movieId={movie.id} />
               <ShareButton movieId={movie.id} title={movie.title} />
             </div>

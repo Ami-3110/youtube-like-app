@@ -69,7 +69,7 @@ export default function TopicBar({
   }, [topics]);
   
   return (
-    <div className="relative bg-sky-950 px-5 py-3">
+    <div className="relative bg-sky-950 px-4 py-3 sm:px-5">
       {canScrollLeft && (
         <button
           type="button"
@@ -82,12 +82,12 @@ export default function TopicBar({
 
       <div
         ref={scrollRef}
-        className="scrollbar-hide flex gap-3 overflow-x-auto"
+        className="scrollbar-hide flex gap-2 overflow-x-auto sm:gap-3"
       >
         <button
           type="button"
           onClick={() => onSelectTopic("すべて")}
-          className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold ${
+          className={`shrink-0 rounded-lg px-3 py-2 text-sm font-bold sm:px-4 ${
             selectedTopic === "すべて"
               ? "bg-slate-300 text-slate-950"
               : "bg-slate-800 text-slate-300 hover:bg-slate-700"
@@ -101,7 +101,7 @@ export default function TopicBar({
             key={topic.id}
             type="button"
             onClick={() => onSelectTopic(topic.name)}
-            className={`shrink-0 rounded-lg border border-slate-600 px-4 py-2 text-sm font-bold ${
+            className={`shrink-0 rounded-lg border border-slate-600 px-3 py-2 text-sm font-bold sm:px-4 ${
               selectedTopic === topic.name
                 ? "bg-slate-300 text-slate-950"
                 : "bg-slate-800 text-slate-300 hover:bg-slate-700"

@@ -184,7 +184,7 @@ export default function MovieForm({ initialMovie }: Props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="w-full max-w-6xl rounded-xl bg-slate-900 p-5 text-white shadow-xl">
+      <div className="w-full max-w-6xl rounded-xl bg-slate-900 p-4 text-white shadow-xl sm:p-5">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold">
             {isEditMode ? "動画を編集" : "動画を投稿"}
@@ -200,7 +200,7 @@ export default function MovieForm({ initialMovie }: Props) {
 
         <div className="my-4 border-b border-slate-700" />
 
-        <div className="mt-6 flex gap-8">
+        <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:gap-8">
           <div className="flex-1">
             <div className="rounded-lg mb-6 border border-slate-600">
               <label className="text-xs text-slate-500 mb-4 p-1">
@@ -230,7 +230,7 @@ export default function MovieForm({ initialMovie }: Props) {
                 サムネイル
               </label>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row">
                 <input
                   ref={thumbnailInputRef}
                   type="file"
@@ -305,7 +305,7 @@ export default function MovieForm({ initialMovie }: Props) {
             </div>
           </div>
 
-          <div className="w-96 shrink-0">
+          <div className="w-full lg:w-96 lg:shrink-0">
             <input
               ref={videoInputRef}
               type="file"

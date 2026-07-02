@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { getFollowStatus, toggleFollow } from "@/lib/api/follows";
+import { getCurrentUser } from "@/lib/api/auth";
 
 type Props = {
   userId: number;
@@ -13,10 +14,14 @@ export default function FollowButton({ userId }: Props) {
   const [followersCount, setFollowersCount] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchFollowStatus() {
       try {
+        const currentUser = await getCurrentUser();
+        setCurrentUserId(currentUser?.id ?? null);
+
         const data = await getFollowStatus(userId);
         setIsFollowing(data.is_following);
         setFollowersCount(data.followers_count);
@@ -41,6 +46,10 @@ export default function FollowButton({ userId }: Props) {
     } finally {
       setIsLoading(false);
     }  
+  }
+
+  if (currentUserId === userId) {
+    return null;
   }
 
   if (!isFollowing) {
@@ -75,7 +84,7 @@ export default function FollowButton({ userId }: Props) {
           <button
             onClick={handleFollow}
             disabled={isLoading}
-            className="block w-full px-4 py-2 text-left text-red-300 hover:bf-slate-700"
+            className="block w-full px-4 py-2 text-left text-red-300 hover:bg-slate-700"
           >
             登録解除
           </button>
