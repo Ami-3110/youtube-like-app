@@ -83,6 +83,9 @@ export default function LoginPage() {
 
         <button
           type="button"
+          onClick={() => {
+            window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+          }}
           className="flex w-full items-center justify-center gap-3 rounded-full border border-(--border) bg-(--surface-2) px-4 py-3 hover:bg-(--surface-3)"
         >
           <FcGoogle size={22} />

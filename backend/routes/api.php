@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\AdminFeatureRequestController;
 use App\Http\Controllers\Api\AdminTopicController;
 use App\Http\Controllers\Api\AdminUserController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\GoogleAuthController;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +34,10 @@ Route::post('/login', [LoginController::class, 'store']);
 //Logout
 Route::post('/logout', [LoginController::class, 'destroy'])
   ->middleware('auth:sanctum');
+
+// Google OAuth
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect']);
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
 // Dashboard
 Route::get('/movies', [MovieController::class, 'index']);
