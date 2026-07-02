@@ -61,7 +61,9 @@ class CommentController extends Controller
 
     public function destroy(Request $request, Comment $comment)
     {
-      if ($comment->user_id !== $request->user()->id) {
+      $user = $request->user();   
+
+      if ($comment->user_id !== $user->id && !$user->is_admin) {
         return response()->json([
           'message' => '権限がありません',
         ], 403);

@@ -17,11 +17,13 @@ export default function MovieActionButtons({ movieId, ownerId }: Props) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     async function fetchUser() {
       const currentUser = await getCurrentUser();
       setIsOwner(currentUser?.id === ownerId);
+      setIsAdmin(Boolean(currentUser?.is_admin));
     }
 
     fetchUser();
@@ -38,27 +40,31 @@ export default function MovieActionButtons({ movieId, ownerId }: Props) {
     }    
   };
 
-  if (!isOwner) {
+  if (!isOwner && !isAdmin) {
     return null;
   }
  
   return (
     <>
       <div className="flex gap-2">
-        <Link
-          href={`/movies/${movieId}/edit`}
-          className="rounded-full bg-slate-700 px-4 py-2 text-sm text-white hover:bg-slate-600"
-        >
-          編集
-        </Link>
+        {isOwner && (
+          <Link
+            href={`/movies/${movieId}/edit`}
+            className="rounded-full bg-slate-700 px-4 py-2 text-sm text-white hover:bg-slate-600"
+          >
+            編集
+          </Link>
+        )}
 
+        {(isOwner || isAdmin) && (
         <button
           type="button"
           onClick={() => setIsDeleteModalOpen(true)}
           className="rounded-full bg-red-700 px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-950"
         >
           削除
-        </button>
+          </button>
+        )}        
       </div>
 
       <ConfirmModal

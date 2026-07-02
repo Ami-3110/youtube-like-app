@@ -12,7 +12,9 @@ use App\Http\Controllers\Api\UserChannelController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\FeatureRequestController;
-
+use App\Http\Controllers\Api\AdminFeatureRequestController;
+use App\Http\Controllers\Api\AdminTopicController;
+use App\Http\Controllers\Api\AdminUserController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -99,5 +101,21 @@ Route::middleware('auth:sanctum')->group(function () {
   // Account delete
   Route::delete('/me/account',[AccountController::class, 'destroy']);
   
+  // Admin request get
+  Route::get('/admin/feature-requests', [AdminFeatureRequestController::class, 'index']);
+  // Admin request patch
+  Route::patch(
+    '/admin/feature-requests/{featureRequest}', [AdminFeatureRequestController::class, 'update']
+    );
+  // Admin topic get
+  Route::get('/admin/topics', [AdminTopicController::class, 'index']);
+  // Admin topic post
+  Route::post('/admin/topics', [AdminTopicController::class, 'store']);
+  // Admin topic delete
+  Route::delete('/admin/topics/{topic}', [AdminTopicController::class, 'destroy']);
+  // Admin user get
+  Route::get('/admin/users', [AdminUserController::class, 'index']);
+  // Admin user delete
+  Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy']);
 });
 

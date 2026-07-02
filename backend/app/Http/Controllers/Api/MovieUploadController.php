@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Psr\Log\NullLogger;
 
 class MovieUploadController extends Controller
 {
@@ -93,7 +92,9 @@ class MovieUploadController extends Controller
 
     public function destroy(Request $request, Movie $movie)
     {
-      if ($movie->user_id !== $request->user()->id) {
+      $user = $request->user();
+
+      if ($movie->user_id !== $user->id && !$user->is_admin) {
         abort(403);
       }
 

@@ -1,7 +1,7 @@
 // frontend/lib/api/comments.ts
 import { getCookie, getCsrfCookie } from "@/lib/api/auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export type FeatureRequestStatus =
   | "pending"
@@ -22,7 +22,7 @@ export type FeatureRequest = {
 };
 
 export async function getMyFeatureRequests(): Promise<FeatureRequest[]> {
-  const res = await fetch(`${API_URL}/me/feature-requests`, {
+  const res = await fetch(`${API_BASE_URL}/me/feature-requests`, {
     headers: {
       Accept: "application/json",
     },
@@ -44,7 +44,7 @@ export async function createFeatureRequest(data: {
 
   const token = decodeURIComponent(getCookie("XSRF-TOKEN") ?? "");
 
-  const res = await fetch(`${API_URL}/feature-requests`, {
+  const res = await fetch(`${API_BASE_URL}/feature-requests`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -68,7 +68,7 @@ export async function withdrawFeatureRequest(featureRequestId: number) {
   const token = decodeURIComponent(getCookie("XSRF-TOKEN") ?? "");
 
   const res = await fetch(
-    `${API_URL}/feature-requests/${featureRequestId}/withdraw`,
+    `${API_BASE_URL}/feature-requests/${featureRequestId}/withdraw`,
     {
       method: "PATCH",
       headers: {

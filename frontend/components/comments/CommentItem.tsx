@@ -20,6 +20,7 @@ type CommentItemProps = {
     id: number;
     name: string;
     avatar_path: string | null;
+    is_admin: boolean;
   } | null;
   onUpdate: (UpdatedComment: Comment) => void;
   onDelete: (commentId: number) => void;
@@ -41,6 +42,7 @@ export function CommentItem({
   const [editBody, setEditBody] = useState(comment.body);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const isOwner = currentUserId === comment.user.id;
+  const isAdmin = Boolean(currentUser?.is_admin);
   const [isReplyFormOpen, setIsReplyFormOpen] = useState(false);
 
   async function handleUpdate() {
@@ -129,7 +131,7 @@ export function CommentItem({
             </div>
           </div>
 
-          {isOwner && (
+          {(isOwner || isAdmin) && (
             <div ref={menuRef} className="relative">
               <button
                 type="button"
@@ -141,6 +143,7 @@ export function CommentItem({
 
               {isMenuOpen && (
                 <div className="absolute right-0 top-10 z-10 w-24 rounded-xl bg-slate-800 shadow-lg">
+                  {isOwner && (
                   <button
                     type="button"
                     onClick={() => {
@@ -152,18 +155,21 @@ export function CommentItem({
                     <FiEdit size={18} />
                     <span className="text-sm">編集</span>
                   </button>
+                  )}                             
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      setIsDeleteModalOpen(true);
-                    }}
-                    className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
-                  >
-                    <FiTrash2 size={18} />
-                    <span className="text-sm">削除</span>
-                  </button>
+                  {(isOwner || isAdmin) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsDeleteModalOpen(true);
+                      }}
+                      className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
+                    >
+                      <FiTrash2 size={18} />
+                      <span className="text-sm">削除</span>
+                    </button>
+                  )}                  
                 </div>
               )}
             </div>
