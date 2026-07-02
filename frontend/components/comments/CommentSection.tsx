@@ -40,58 +40,58 @@ export function CommentSection({ movieId, comments }: CommentSectionProps) {
     });
   }
 
-  return (
-    <section className="mt-8 max-w-4xl">
-      <h2 className="text-xl font-bold text-white">
-        コメント {commentList.length}件
-      </h2>
+return (
+  <section className="mt-8 max-w-4xl">
+    <h2 className="text-xl font-bold text-(--text-main)">
+      コメント {commentList.length}件
+    </h2>
 
-      <div className="mt-6 flex gap-3">
-        <CommentForm
-          movieId={movieId}
-          onAddComment={handleAddComment}
-          currentUser={currentUser}
-        />
-      </div>
+    <div className="mt-6 flex gap-3">
+      <CommentForm
+        movieId={movieId}
+        onAddComment={handleAddComment}
+        currentUser={currentUser}
+      />
+    </div>
 
-      <div className="mt-2 space-y-3">
-        {commentList
-          .filter((comment) => comment.parent_id === null)
-          .map((comment) => {
-            const replies = commentList.filter(
-              (reply) => reply.parent_id === comment.id,
-            );
+    <div className="mt-2 space-y-3">
+      {commentList
+        .filter((comment) => comment.parent_id === null)
+        .map((comment) => {
+          const replies = commentList.filter(
+            (reply) => reply.parent_id === comment.id,
+          );
 
-            return (
-              <div key={comment.id}>
-                <CommentItem
-                  comment={comment}
-                  movieId={movieId}
-                  currentUserId={currentUser?.id ?? null}
-                  currentUser={currentUser}
-                  onUpdate={handleUpdateComment}
-                  onDelete={handleDeleteComment}
-                  onAddComment={handleAddComment}
-                />
+          return (
+            <div key={comment.id}>
+              <CommentItem
+                comment={comment}
+                movieId={movieId}
+                currentUserId={currentUser?.id ?? null}
+                currentUser={currentUser}
+                onUpdate={handleUpdateComment}
+                onDelete={handleDeleteComment}
+                onAddComment={handleAddComment}
+              />
 
-                <div className="ml-12 mt-2 space-y-2">
-                  {replies.map((reply) => (
-                    <CommentItem
-                      key={reply.id}
-                      comment={reply}
-                      movieId={movieId}
-                      currentUserId={currentUser?.id ?? null}
-                      currentUser={currentUser}
-                      onUpdate={handleUpdateComment}
-                      onDelete={handleDeleteComment}
-                      onAddComment={handleAddComment}
-                    />
-                  ))}
-                </div>
+              <div className="ml-12 mt-2 space-y-2">
+                {replies.map((reply) => (
+                  <CommentItem
+                    key={reply.id}
+                    comment={reply}
+                    movieId={movieId}
+                    currentUserId={currentUser?.id ?? null}
+                    currentUser={currentUser}
+                    onUpdate={handleUpdateComment}
+                    onDelete={handleDeleteComment}
+                    onAddComment={handleAddComment}
+                  />
+                ))}
               </div>
-            );
-          })}
-      </div>
-    </section>
-  );
+            </div>
+          );
+        })}
+    </div>
+  </section>
+);
 }

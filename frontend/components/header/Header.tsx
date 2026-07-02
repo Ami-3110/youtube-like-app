@@ -7,7 +7,7 @@ import UserMenu from "./UserMenu";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-sky-950">
+    <header className="sticky top-0 z-50 bg-[var(--surface-0)]">
       <div className="mx-auto grid max-w-7xl grid-cols-[auto_auto] items-center gap-2 px-4 py-2 md:grid-cols-[auto_1fr_auto]">
         <div className="min-w-0">
           <Logo />

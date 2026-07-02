@@ -22,18 +22,18 @@ export function ConfirmModal({
       onClick={onCancel}
     >
       <div
-        className="w-full max-w-sm rounded-2xl bg-slate-800 p-6 text-white"
+        className="w-full max-w-sm rounded-2xl border border-(--border) bg-(--surface-1) p-6 text-(--text-main)"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-semibold">{title}</h2>
 
-        <p className="mt-6 text-slate-300">{message}</p>
+        <p className="mt-6 text-(--text-sub)">{message}</p>
 
         <div className="mt-8 flex justify-end gap-6">
           <button
             type="button"
             onClick={onCancel}
-            className="text-blue-400"
+            className="text-(--text-sub) hover:text-(--text-main)"
           >
             キャンセル
           </button>
@@ -41,7 +41,7 @@ export function ConfirmModal({
           <button
             type="button"
             onClick={onConfirm}
-            className="text-blue-400"
+            className="font-semibold text-(--danger-bg) hover:text-(--danger-hover)"
           >
             削除
           </button>

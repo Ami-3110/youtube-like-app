@@ -6,7 +6,7 @@ export default function NotificationButton() {
     <div className="pt-1">
       <button
         type="button"
-        className="flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-slate-800"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-(--border) bg-(--surface-2) text-(--text-main) hover:bg-(--surface-3)"
       >
         <AiOutlineBell size={24} />
       </button>

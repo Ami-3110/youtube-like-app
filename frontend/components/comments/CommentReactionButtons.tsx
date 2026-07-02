@@ -56,7 +56,7 @@ export default function CommentReactionButton({ commentId }: Props) {
         type="button"
         onClick={handleLike}
         disabled={isLoading}
-        className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-slate-800 disabled:opacity-50"
+        className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-[var(--surface-3)] disabled:opacity-50"
       >
         {reaction?.my_reaction === "like" ? (
           <AiFillLike size={16} />
@@ -71,7 +71,7 @@ export default function CommentReactionButton({ commentId }: Props) {
         type="button"
         onClick={handleDislike}
         disabled={isLoading}
-        className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-slate-800 disabled:opacity-50"
+        className="flex items-center gap-2 rounded-full px-4 py-2 hover:bg-[var(--surface-3)] disabled:opacity-50"
       >
         {reaction?.my_reaction === "dislike" ? (
           <AiFillDislike size={16} />

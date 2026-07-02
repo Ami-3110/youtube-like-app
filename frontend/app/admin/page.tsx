@@ -174,24 +174,26 @@ export default function AdminPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-linear-to-b from-sky-950 to-slate-950 py-10 text-white">
+      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) py-10 text-(--text-main)">
         <div className="mx-auto max-w-6xl px-4">
           <h1 className="text-2xl font-bold">管理画面</h1>
 
-          <section className="mt-8 rounded-2xl bg-slate-900 p-6 shadow-xl">
+          <section className="mt-8 rounded-2xl border border-(--border) bg-(--surface-1) p-6 shadow-xl">
             <h2 className="text-lg font-semibold">リクエスト管理</h2>
 
             {isAdminDataLoading ? (
-              <p className="mt-4 text-sm text-slate-400">読み込み中...</p>
+              <p className="mt-4 text-sm text-(--text-sub)">
+                読み込み中...
+              </p>
             ) : requests.length === 0 ? (
-              <p className="mt-4 text-sm text-slate-400">
+              <p className="mt-4 text-sm text-(--text-sub)">
                 リクエストはありません。
               </p>
             ) : (
               <>
                 <div className="mt-4 hidden overflow-x-auto md:block">
                   <table className="w-full text-left text-sm">
-                    <thead className="border-b border-slate-700 text-slate-400">
+                    <thead className="border-b border-(--border) text-(--text-sub)">
                       <tr>
                         <th className="px-3 py-2">送信日</th>
                         <th className="px-3 py-2">ユーザー</th>
@@ -205,9 +207,9 @@ export default function AdminPage() {
                       {requests.map((request) => (
                         <tr
                           key={request.id}
-                          className="border-b border-slate-800 align-top"
+                          className="border-b border-(--border) align-top"
                         >
-                          <td className="px-3 py-3 text-slate-400">
+                          <td className="px-3 py-3 text-(--text-sub)">
                             {new Date(request.created_at).toLocaleDateString(
                               "ja-JP",
                             )}
@@ -215,8 +217,9 @@ export default function AdminPage() {
 
                           <td className="px-3 py-3">
                             <p className="font-semibold">{request.user.name}</p>
+
                             {request.user.handle && (
-                              <p className="text-xs text-slate-400">
+                              <p className="text-xs text-(--text-sub)">
                                 @{request.user.handle}
                               </p>
                             )}
@@ -227,12 +230,12 @@ export default function AdminPage() {
                           </td>
 
                           <td className="px-3 py-3">
-                            <p className="whitespace-pre-wrap text-slate-300">
+                            <p className="whitespace-pre-wrap text-(--text-sub)">
                               {request.body}
                             </p>
 
                             {request.admin_comment && (
-                              <div className="mt-2 rounded-lg bg-slate-800 p-2 text-xs text-slate-300">
+                              <div className="mt-2 rounded-lg bg-(--surface-2) p-2 text-xs text-(--text-sub)">
                                 管理者コメント: {request.admin_comment}
                               </div>
                             )}
@@ -247,7 +250,7 @@ export default function AdminPage() {
                                   e.target.value as FeatureRequestStatus,
                                 )
                               }
-                              className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none"
+                              className="rounded-lg border border-(--border) bg-(--surface-2) px-3 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
                             >
                               {statuses.map((status) => (
                                 <option key={status} value={status}>
@@ -266,39 +269,45 @@ export default function AdminPage() {
                   {requests.map((request) => (
                     <div
                       key={request.id}
-                      className="rounded-xl border border-slate-700 bg-slate-950 p-4 text-sm"
+                      className="rounded-xl border border-(--border) bg-(--surface-2) p-4 text-sm"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="font-bold">{request.user.name}</p>
+
                           {request.user.handle && (
-                            <p className="text-xs text-slate-400">
+                            <p className="text-xs text-(--text-sub)">
                               @{request.user.handle}
                             </p>
                           )}
                         </div>
 
-                        <p className="shrink-0 text-xs text-slate-400">
-                          {new Date(request.created_at).toLocaleDateString("ja-JP")}
+                        <p className="shrink-0 text-xs text-(--text-sub)">
+                          {new Date(request.created_at).toLocaleDateString(
+                            "ja-JP",
+                          )}
                         </p>
                       </div>
 
-                      <p className="mt-3 font-bold text-sky-300">{request.title}</p>
+                      <p className="mt-3 font-bold text-(--accent)">
+                        {request.title}
+                      </p>
 
-                      <p className="mt-2 whitespace-pre-wrap text-slate-300">
+                      <p className="mt-2 whitespace-pre-wrap text-(--text-sub)">
                         {request.body}
                       </p>
 
                       {request.admin_comment && (
-                        <div className="mt-3 rounded-lg bg-slate-800 p-2 text-xs text-slate-300">
+                        <div className="mt-3 rounded-lg bg-(--surface-3) p-2 text-xs text-(--text-sub)">
                           管理者コメント: {request.admin_comment}
                         </div>
                       )}
 
                       <div className="mt-4">
-                        <label className="mb-1 block text-xs text-slate-400">
+                        <label className="mb-1 block text-xs text-(--text-sub)">
                           ステータス
                         </label>
+
                         <select
                           value={request.status}
                           onChange={(e) =>
@@ -307,7 +316,7 @@ export default function AdminPage() {
                               e.target.value as FeatureRequestStatus,
                             )
                           }
-                          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm outline-none"
+                          className="w-full rounded-lg border border-(--border) bg-(--surface-2) px-3 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
                         >
                           {statuses.map((status) => (
                             <option key={status} value={status}>
@@ -324,7 +333,7 @@ export default function AdminPage() {
                   <button
                     disabled={page === 1}
                     onClick={() => refreshRequests(page - 1)}
-                    className="rounded-full bg-slate-700 px-4 py-2 text-sm disabled:opacity-50"
+                    className="rounded-full border border-(--border) bg-(--surface-2) px-4 py-2 text-sm text-(--text-main) hover:bg-(--surface-3) disabled:opacity-50"
                   >
                     ← 前へ
                   </button>
@@ -336,7 +345,7 @@ export default function AdminPage() {
                   <button
                     disabled={page === lastPage}
                     onClick={() => refreshRequests(page + 1)}
-                    className="rounded-full bg-slate-700 px-4 py-2 text-sm disabled:opacity-50"
+                    className="rounded-full border border-(--border) bg-(--surface-2) px-4 py-2 text-sm text-(--text-main) hover:bg-(--surface-3) disabled:opacity-50"
                   >
                     次へ →
                   </button>
@@ -345,7 +354,7 @@ export default function AdminPage() {
             )}
           </section>
 
-          <section className="mt-8 rounded-2xl bg-slate-900 p-6 shadow-xl">
+          <section className="mt-8 rounded-2xl border border-(--border) bg-(--surface-1) p-6 shadow-xl">
             <h2 className="text-lg font-semibold">トピック管理</h2>
 
             <div className="mt-4 flex gap-2">
@@ -353,12 +362,13 @@ export default function AdminPage() {
                 value={newTopic}
                 onChange={(e) => setNewTopic(e.target.value)}
                 placeholder="新しいトピック"
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2"
+                className="flex-1 rounded-lg border border-(--border) bg-(--surface-2) px-3 py-2 text-(--text-main) outline-none focus:border-(--accent)"
               />
 
               <button
+                type="button"
                 onClick={handleCreateTopic}
-                className="rounded-full bg-slate-200 px-4 py-2 text-sm text-slate-950"
+                className="rounded-full border border-(--border) bg-(--surface-2) px-4 py-2 text-sm text-(--text-main) hover:bg-(--surface-3)"
               >
                 追加
               </button>
@@ -368,7 +378,7 @@ export default function AdminPage() {
               {topics.map((topic) => (
                 <label
                   key={topic.id}
-                  className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-200 hover:border-sky-500"
+                  className="flex cursor-pointer items-center gap-2 rounded-lg border border-(--border) bg-(--surface-2) px-3 py-2 text-sm text-(--text-main) hover:bg-(--surface-3)"
                 >
                   <input
                     type="radio"
@@ -383,21 +393,22 @@ export default function AdminPage() {
 
             <div className="mt-6 flex justify-end">
               <button
+                type="button"
                 onClick={handleDeleteTopic}
                 disabled={!selectedTopicId}
-                className="rounded-full bg-red-700 px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-950 disabled:opacity-50"
+                className="rounded-full bg-(--danger-bg) px-5 py-2 text-sm font-semibold text-(--danger-text) hover:bg-(--danger-hover) disabled:opacity-50"
               >
                 削除
               </button>
             </div>
           </section>
 
-          <section className="mt-8 rounded-2xl bg-slate-900 p-6 shadow-xl">
+          <section className="mt-8 rounded-2xl border border-(--border) bg-(--surface-1) p-6 shadow-xl">
             <h2 className="text-lg font-semibold">ユーザー管理</h2>
 
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-left text-sm">
-                <thead className="border-b border-slate-700 text-slate-400">
+                <thead className="border-b border-(--border) text-(--text-sub)">
                   <tr>
                     <th className="px-3 py-2">ユーザー</th>
                     <th className="px-3 py-2">メール</th>
@@ -409,23 +420,28 @@ export default function AdminPage() {
 
                 <tbody>
                   {users.map((user) => (
-                    <tr key={user.id} className="border-b border-slate-800">
+                    <tr
+                      key={user.id}
+                      className="border-b border-(--border)"
+                    >
                       <td className="px-3 py-3">
                         <Link
                           href={`/channel/${user.id}`}
-                          className="font-semibold text-sky-400 hover:text-sky-300"
+                          className="font-semibold text-(--accent) hover:opacity-80"
                         >
                           {user.name}
                         </Link>
 
                         {user.handle && (
-                          <p className="text-xs text-slate-400">
+                          <p className="text-xs text-(--text-sub)">
                             @{user.handle}
                           </p>
                         )}
                       </td>
 
-                      <td className="px-3 py-3 text-slate-300">{user.email}</td>
+                      <td className="px-3 py-3 text-(--text-sub)">
+                        {user.email}
+                      </td>
 
                       <td className="px-3 py-3">{user.movies_count}</td>
 
@@ -435,14 +451,14 @@ export default function AdminPage() {
 
                       <td className="px-3 py-3">
                         {user.id === currentUser?.id ? (
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-(--text-sub)">
                             自分自身
                           </span>
                         ) : (
                           <button
                             type="button"
                             onClick={() => handleDeleteUser(user.id)}
-                            className="rounded-full bg-red-700 px-4 py-1 text-xs font-semibold text-red-400 hover:bg-red-950"
+                            className="rounded-full bg-(--danger-bg) px-4 py-1 text-xs font-semibold text-(--danger-text) hover:bg-(--danger-hover)"
                           >
                             削除
                           </button>
@@ -463,13 +479,14 @@ export default function AdminPage() {
           onClick={() => setSelectedRequest(null)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-slate-800 p-6 text-white"
+            className="w-full max-w-md rounded-2xl border border-(--border) bg-(--surface-1) p-6 text-(--text-main)"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-semibold">ステータス変更</h2>
 
-            <p className="mt-4 text-sm text-slate-300">
-              {selectedRequest.title} を「{statusLabels[selectedStatus]}」に変更します。
+            <p className="mt-4 text-sm text-(--text-sub)">
+              {selectedRequest.title} を「{statusLabels[selectedStatus]}
+              」に変更します。
             </p>
 
             <textarea
@@ -477,14 +494,14 @@ export default function AdminPage() {
               onChange={(e) => setAdminComment(e.target.value)}
               rows={4}
               placeholder="管理者コメント"
-              className="mt-4 w-full resize-none rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-sky-500"
+              className="mt-4 w-full resize-none rounded-lg border border-(--border) bg-(--surface-2) px-3 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
             />
 
             <div className="mt-6 flex justify-end gap-4">
               <button
                 type="button"
                 onClick={() => setSelectedRequest(null)}
-                className="text-sm text-slate-300 hover:text-white"
+                className="text-sm text-(--text-sub) hover:text-(--text-main)"
               >
                 キャンセル
               </button>
@@ -492,7 +509,7 @@ export default function AdminPage() {
               <button
                 type="button"
                 onClick={handleUpdateRequest}
-                className="rounded-full bg-slate-200 px-5 py-2 text-sm font-bold text-slate-950 hover:bg-white"
+                className="rounded-full bg-(--accent) px-5 py-2 text-sm font-bold text-(--accent-text) hover:opacity-90"
               >
                 更新
               </button>

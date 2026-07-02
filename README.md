@@ -19,8 +19,8 @@ Laravel + Next.jsで作成したYouTubeライクアプリ
 * currentUserとcurrentUserIdが重複してる（Ownerんとこ）→切り出し？
 * ダミーデータの画像パスを /storage/... に統一
 * リクエスト画面作成☑️
-* デザイン切り替え（deep sea / coral sea）
-* @media対応
+* デザイン切り替え（deep sea / coral sea）☑️
+* @media対応☑️
 * SSO対応
 * 管理者画面☑️
 1. Topic管理

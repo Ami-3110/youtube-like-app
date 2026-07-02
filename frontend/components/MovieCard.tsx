@@ -10,10 +10,8 @@ type Props = {
 
 export default function MovieCard({ movie }: Props) {
   return (
-    <article
-      className="cursor-pointer rounded-2xl p-2 transition-all duration-500 hover:bg-slate-700 hover:shadow-xl"
-    >
-      <div className="relative mb-3 flex aspect-video overflow-hidden rounded-xl bg-slate-200 text-sm text-slate-500">
+    <article className="cursor-pointer rounded-2xl p-2 transition-all duration-500 hover:bg-(--surface-3) hover:shadow-xl">
+      <div className="relative mb-3 flex aspect-video overflow-hidden rounded-xl bg-(--surface-2) text-sm text-(--text-sub)">
         {movie.thumbnail_path ? (
           <Image
             src={mediaUrl(movie.thumbnail_path)}
@@ -23,20 +21,20 @@ export default function MovieCard({ movie }: Props) {
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : (
-            <div className="flex h-full items-center justify-center text-sm text-slate-400">
-              No thumbnail
-              </div>
+          <div className="flex h-full items-center justify-center text-sm text-(--text-sub)">
+            No thumbnail
+          </div>
         )}
       </div>
 
       <h2 className="line-clamp-2 text-base font-semibold">{movie.title}</h2>
 
-      <p className="mt-1 text-sm text-slate-600">{movie.user}</p>
+      <p className="mt-1 text-sm text-(--text-sub)">{movie.user}</p>
 
-      <p className="text-sm text-slate-500">
-        {movie.views.toLocaleString()} 回視聴・{formatRelativeTime(movie.created_at)}
+      <p className="text-sm text-(--text-sub)">
+        {movie.views.toLocaleString()} 回視聴・
+        {formatRelativeTime(movie.created_at)}
       </p>
-      
     </article>
   );
 }

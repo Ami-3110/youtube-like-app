@@ -131,7 +131,7 @@ export function ShareButton({ movieId, title }: Props) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="rounded-full bg-slate-800 px-4 py-2 hover:bg-slate-700"
+        className="rounded-full border border-(--border) bg-(--surface-2) px-4 py-2 text-(--text-main) hover:bg-(--surface-3)"
       >
         共有
       </button>
@@ -142,7 +142,7 @@ export function ShareButton({ movieId, title }: Props) {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-slate-900 p-5 text-white shadow-xl"
+            className="w-full max-w-md rounded-2xl border border-(--border) bg-(--surface-1) p-5 text-(--text-main) shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
@@ -151,7 +151,7 @@ export function ShareButton({ movieId, title }: Props) {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="rounded-full px-3 py-1 text-slate-300 hover:bg-slate-800"
+                className="rounded-full px-3 py-1 text-(--text-sub) hover:bg-(--surface-3)"
               >
                 ×
               </button>
@@ -175,7 +175,7 @@ export function ShareButton({ movieId, title }: Props) {
                   onClick={() => setIsEmbedOpen(true)}
                   className="flex min-w-20 flex-col items-center gap-2"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-800">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-(--surface-2)">
                     <FaCode size={24} />
                   </div>
                   <span className="text-xs">埋め込む</span>
@@ -245,15 +245,15 @@ export function ShareButton({ movieId, title }: Props) {
               </button>
             </div>
 
-            <div className="mt-5 flex items-center justify-between rounded-xl border border-slate-700 bg-slate-900 px-3 py-2">
-              <span className="truncate text-sm text-slate-300">
+            <div className="mt-5 flex items-center justify-between rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2">
+              <span className="truncate text-sm text-(--text-sub)">
                 {getCurrentUrl()}
               </span>
 
               <button
                 type="button"
                 onClick={handleCopy}
-                className="ml-4 rounded-full border border-slate-600 px-4 py-2 text-sm hover:bg-slate-800"
+                className="ml-4 rounded-full border border-(--border) px-4 py-2 text-sm hover:bg-(--surface-3)"
               >
                 {copied ? "コピーしました" : "コピー"}
               </button>
@@ -269,7 +269,7 @@ export function ShareButton({ movieId, title }: Props) {
           onClick={() => setIsEmbedOpen(false)}
         >
           <div
-            className="grid w-full max-w-6xl overflow-hidden rounded-2xl bg-slate-900 text-white shadow-xl md:grid-cols-[3fr_2fr]"
+            className="grid w-full max-w-6xl overflow-hidden rounded-2xl border border-(--border) bg-(--surface-1) text-(--text-main) shadow-xl md:grid-cols-[3fr_2fr]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* 左：プレビュー */}
@@ -286,12 +286,12 @@ export function ShareButton({ movieId, title }: Props) {
                 </h2>
               </div>
             </div>
-            
+
             {/* 右：コード欄 */}
-            <div className="flex min-h-90 flex-col border border-slate-700">
-              <div className="flex items-center justify-between border-b border-slate-700 p-4">
+            <div className="flex min-h-90 flex-col border border-(--border)">
+              <div className="flex items-center justify-between border-b border-(--border) p-4">
                 <h3 className="text-base font-bold">動画の埋め込み</h3>
-              
+
                 <button
                   type="button"
                   onClick={() => setIsEmbedOpen(false)}
@@ -302,16 +302,16 @@ export function ShareButton({ movieId, title }: Props) {
               </div>
 
               <div className="flex-1 overflow-y-auto p-4">
-                <pre className="whitespace-pre-wrap text-sm text-slate-300">
+                <pre className="whitespace-pre-wrap text-sm text-(--text-sub)">
                   <code>{getEmbedCode()}</code>
                 </pre>
               </div>
-              
-              <div className="flex justify-end border-t border-slate-700 p-4">
+
+              <div className="flex justify-end border-t border-(--border) p-4">
                 <button
                   type="button"
                   onClick={handleCopyEmbed}
-                  className="rounded-full border border-slate-600 px-5 py-2 text-sm hover:bg-slate-800"
+                  className="rounded-full border border-(--border) px-5 py-2 text-sm hover:bg-(--surface-3)"
                 >
                   {embedCopied ? "コピーしました" : "コピー"}
                 </button>

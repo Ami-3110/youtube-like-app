@@ -45,7 +45,7 @@ export default function RelatedMovies({ movieId, topics }: Props) {
   }, [movieId]);
 
   if (isLoading) {
-    return <p className="text-slate-400">読み込み中...</p>;
+    return <p className="text-(--text-sub)">読み込み中...</p>;
   }
 
   return (

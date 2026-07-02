@@ -6,7 +6,7 @@ export default function UploadPage() {
   return (
     <>
       <Header />
-      <main className="w-full mx-auto max-w-6xl px-4 py-8">
+      <main className="w-full mx-auto max-w-6xl bg-linear-to-b from-(--page-from) to-(--page-to) px-4 py-8">
         <MovieForm />
       </main>
     </>

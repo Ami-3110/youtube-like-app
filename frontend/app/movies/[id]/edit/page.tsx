@@ -1,5 +1,6 @@
 // frontend/app/movies/[id]/edit/page.tsx
 import { getMovie } from "@/lib/api/movies";
+import Header from "@/components/header/Header";
 import MovieForm from "@/components/movies/MovieForm";
 
 type Props = {
@@ -13,8 +14,11 @@ export default async function MovieEditPage({ params }: Props) {
   const movie = await getMovie(id);
 
   return (
-    <main className="min-h-screen bg-slate-950 p-6">
-      <MovieForm initialMovie={movie} />
-    </main>
+    <>
+      <Header />
+      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) p-6">
+        <MovieForm initialMovie={movie} />
+      </main>
+    </>
   );
 }

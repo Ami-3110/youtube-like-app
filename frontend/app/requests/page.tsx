@@ -93,18 +93,18 @@ export default function RequestsPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-linear-to-b from-sky-950 to-slate-950 py-10 text-white">
+      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) py-10 text-(--text-main)">
         <div className="mx-auto max-w-4xl px-4">
           <h1 className="text-2xl font-bold">リクエスト</h1>
 
-          <section className="mt-8 rounded-2xl bg-slate-900 p-6 shadow-xl">
+          <section className="mt-8 rounded-2xl border border-(--border) bg-(--surface-1) p-6 shadow-xl">
             <h2 className="text-lg font-semibold">新しいリクエスト</h2>
 
             <form onSubmit={handleSubmit} className="mt-4 space-y-4">
               <select
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+                className="w-full rounded-lg border border-(--border) bg-(--surface-2) px-4 py-2 text-sm outline-none focus:border-(--accent)"
               >
                 <option value="">リクエストの種類を選択</option>
                 {requestTitles.map((requestTitle) => (
@@ -119,33 +119,33 @@ export default function RequestsPage() {
                 onChange={(e) => setBody(e.target.value)}
                 rows={5}
                 placeholder="内容"
-                className="w-full resize-none rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+                className="w-full resize-none rounded-lg border border-(--border) bg-(--surface-2) px-4 py-2 text-sm outline-none focus:border-(--accent)"
               />
 
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="rounded-full bg-slate-200 px-5 py-2 text-sm font-bold text-slate-950 hover:bg-white"
+                  className="rounded-full bg-(--accent) px-5 py-2 text-sm font-bold text-(--accent-text) hover:opacity-90"
                 >
                   送信
                 </button>
-             </div>
+              </div>
             </form>
           </section>
 
-          <section className="mt-8 rounded-2xl bg-slate-900 p-6 shadow-xl">
+          <section className="mt-8 rounded-2xl border border-(--border) bg-(--surface-1) p-6 shadow-xl">
             <h2 className="text-lg font-semibold">送信済みリクエスト</h2>
 
             {isLoading ? (
-              <p className="mt-4 text-sm text-slate-400">読み込み中...</p>
+              <p className="mt-4 text-sm text-(--text-sub)">読み込み中...</p>
             ) : featureRequests.length === 0 ? (
-              <p className="mt-4 text-sm text-slate-400">
+              <p className="mt-4 text-sm text-(--text-sub)">
                 まだリクエストはありません。
               </p>
             ) : (
               <div className="mt-4 overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <thead className="border-b border-slate-700 text-slate-400">
+                  <thead className="border-b border-(--border) text-(--text-sub)">
                     <tr>
                       <th className="px-3 py-2">送信日</th>
                       <th className="px-3 py-2">タイトル</th>
@@ -158,9 +158,9 @@ export default function RequestsPage() {
                     {featureRequests.map((featureRequest) => (
                       <tr
                         key={featureRequest.id}
-                        className="border-b border-slate-800"
+                        className="border-b border-(--border)"
                       >
-                        <td className="px-3 py-3 text-slate-400">
+                        <td className="px-3 py-3 text-(--text-sub)">
                           {new Date(featureRequest.created_at).toLocaleDateString(
                             "ja-JP",
                           )}
@@ -170,12 +170,12 @@ export default function RequestsPage() {
                           <div className="font-semibold">
                             {featureRequest.title}
                           </div>
-                          <div className="mt-1 line-clamp-2 text-xs text-slate-400">
+                          <div className="mt-1 line-clamp-2 text-xs text-(--text-sub)">
                             {featureRequest.body}
                           </div>
 
                           {featureRequest.admin_comment && (
-                            <div className="mt-2 rounded-lg bg-slate-800 p-2 text-xs text-slate-300">
+                            <div className="mt-2 rounded-lg bg-(--surface-2) p-2 text-xs text-(--text-sub)">
                               管理者コメント: {featureRequest.admin_comment}
                             </div>
                           )}
@@ -192,12 +192,14 @@ export default function RequestsPage() {
                             <button
                               type="button"
                               onClick={() => handleWithdraw(featureRequest.id)}
-                              className="rounded-full border border-red-500 px-3 py-1 text-xs font-semibold text-red-400 hover:bg-red-500/10"
+                              className="rounded-full border border-(--danger-bg) px-3 py-1 text-xs font-semibold text-(--danger-bg) hover:bg-(--danger-bg)/10"
                             >
                               取り下げ
                             </button>
                           ) : (
-                            <span className="text-xs text-slate-500">-</span>
+                            <span className="text-xs text-(--text-sub)">
+                              -
+                            </span>
                           )}
                         </td>
                       </tr>
@@ -207,7 +209,7 @@ export default function RequestsPage() {
               </div>
             )}
           </section>
-        </div>        
+        </div>
       </main>
     </>
   );

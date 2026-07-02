@@ -50,21 +50,21 @@ export default function MovieActionButtons({ movieId, ownerId }: Props) {
         {isOwner && (
           <Link
             href={`/movies/${movieId}/edit`}
-            className="rounded-full bg-slate-700 px-4 py-2 text-sm text-white hover:bg-slate-600"
+            className="rounded-full border border-(--border) bg-(--surface-2) px-4 py-2 text-sm text-(--text-main) hover:bg-(--surface-3)"
           >
             編集
           </Link>
         )}
 
         {(isOwner || isAdmin) && (
-        <button
-          type="button"
-          onClick={() => setIsDeleteModalOpen(true)}
-          className="rounded-full bg-red-700 px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-950"
-        >
-          削除
+          <button
+            type="button"
+            onClick={() => setIsDeleteModalOpen(true)}
+            className="rounded-full bg-(--danger-bg) px-5 py-2 text-sm font-semibold text-(--danger-text) hover:bg-(--danger-hover)"
+          >
+            削除
           </button>
-        )}        
+        )}
       </div>
 
       <ConfirmModal

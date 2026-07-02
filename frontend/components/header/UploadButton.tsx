@@ -12,7 +12,7 @@ export default function UploadButton() {
       <button
         type="button"
         onClick={() => router.push("/upload")}
-        className="flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-base text-white hover:bg-slate-700"
+        className="flex items-center gap-2 rounded-full border border-(--border) bg-(--surface-2) px-5 py-2.5 text-base text-(--text-main) hover:bg-(--surface-3)"
       >
         <AiOutlinePlus size={18} />
         <span className="hidden sm:inline">作成</span>

@@ -25,7 +25,7 @@ export default function SubscriberCount({ userId }: Props) {
   }, [userId]);
 
   return (
-    <p className="text-xs text-slate-400">
+    <p className="text-xs text-(--text-sub)">
       チャンネル登録者数 {followersCount.toLocaleString()}人
     </p>
   );

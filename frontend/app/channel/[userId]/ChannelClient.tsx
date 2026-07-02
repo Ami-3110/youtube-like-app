@@ -86,7 +86,7 @@ export default function ChannelClient({ channel }: Props) {
 
   return (
     <>
-      <main className="min-h-screen bg-linear-to-b from-sky-950 to-slate-950 p-6 text-slate-200">
+      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) p-6 text-(--text-main)">
         <section className="mx-auto max-w-5xl">
           <div className="mx-auto flex max-w-4xl items-center gap-8 pb-6">
             <div className="flex flex-1 items-center gap-5">
@@ -110,7 +110,7 @@ export default function ChannelClient({ channel }: Props) {
                     avatarInputRef.current?.click();
                   }
                 }}
-                className="group relative flex size-24 items-center justify-center overflow-hidden rounded-full bg-emerald-500 text-3xl font-bold text-black"
+                className="group relative flex size-24 items-center justify-center overflow-hidden rounded-full bg-(--accent) text-3xl font-bold text-(--accent-text)"
               >
                 {avatarPreviewUrl ? (
                   <Image
@@ -125,17 +125,7 @@ export default function ChannelClient({ channel }: Props) {
                 )}
 
                 {isEditing && isOwnChannel && (
-                  <span
-                    className="
-                    absolute inset-0
-                    flex items-center justify-center
-                    rounded-full
-                    bg-black/60
-                    text-xs font-bold text-white
-                    opacity-0 transition-opacity
-                    group-hover:opacity-100
-                    "
-                  >
+                  <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/60 text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">
                     画像変更
                   </span>
                 )}
@@ -145,38 +135,38 @@ export default function ChannelClient({ channel }: Props) {
                 {isEditing && isOwnChannel ? (
                   <div className="space-y-3">
                     <div className="max-w-sm">
-                      <label className="mb-1 block text-sm font-semibold text-slate-300">
+                      <label className="mb-1 block text-sm font-semibold text-(--text-sub)">
                         チャンネル名
                       </label>
                       <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 outline-none"
+                        className="w-full rounded-lg border border-(--border) bg-(--surface-1) px-3 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
                       />
                     </div>
 
                     <div className="max-w-sm">
-                      <label className="mb-1 block text-sm font-semibold text-slate-300">
+                      <label className="mb-1 block text-sm font-semibold text-(--text-sub)">
                         ハンドル名
                       </label>
                       <input
                         type="text"
                         value={handle}
                         onChange={(e) => setHandle(e.target.value)}
-                        className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 outline-none"
+                        className="w-full rounded-lg border border-(--border) bg-(--surface-1) px-3 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
                       />
                     </div>
 
                     <div className="max-w-xl">
-                      <label className="mb-1 block text-sm font-semibold text-slate-300">
+                      <label className="mb-1 block text-sm font-semibold text-(--text-sub)">
                         チャンネル概要
                       </label>
                       <textarea
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                         rows={3}
-                        className="w-full resize-none rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 outline-none"
+                        className="w-full resize-none rounded-lg border border-(--border) bg-(--surface-1) px-3 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
                       />
                     </div>
 
@@ -184,7 +174,7 @@ export default function ChannelClient({ channel }: Props) {
                       <button
                         type="button"
                         onClick={handleSave}
-                        className="rounded-full bg-slate-200 px-5 py-2 text-sm font-bold text-slate-950 hover:bg-white"
+                        className="rounded-full bg-(--accent) px-5 py-2 text-sm font-bold text-(--accent-text) hover:opacity-90"
                       >
                         保存
                       </button>
@@ -192,7 +182,7 @@ export default function ChannelClient({ channel }: Props) {
                       <button
                         type="button"
                         onClick={() => router.push(`/channel/${channel.id}`)}
-                        className="rounded-full px-5 py-2 text-sm font-bold text-slate-200 hover:bg-slate-800"
+                        className="rounded-full px-5 py-2 text-sm font-bold text-(--text-main) hover:bg-(--surface-3)"
                       >
                         キャンセル
                       </button>
@@ -200,18 +190,18 @@ export default function ChannelClient({ channel }: Props) {
                   </div>
                 ) : (
                   <>
-                    <h1 className="text-3xl font-bold text-slate-200">
+                    <h1 className="text-3xl font-bold text-(--text-main)">
                       {channel.name}
                     </h1>
 
-                    <p className="mt-1 text-sm text-slate-400">
+                    <p className="mt-1 text-sm text-(--text-sub)">
                       @{channel.handle}
                     </p>
 
                     <SubscriberCount userId={channel.id} />
 
                     {channel.bio && (
-                      <p className="mt-3 max-w-2xl whitespace-pre-wrap text-sm text-slate-300">
+                      <p className="mt-3 max-w-2xl whitespace-pre-wrap text-sm text-(--text-sub)">
                         {channel.bio}
                       </p>
                     )}
@@ -228,7 +218,7 @@ export default function ChannelClient({ channel }: Props) {
                     onClick={() =>
                       router.push(`/channel/${channel.id}?edit=true`)
                     }
-                    className="rounded-full bg-slate-200 px-5 py-2 text-sm font-bold text-slate-950 hover:bg-white"
+                    className="rounded-full border border-(--border) bg-(--surface-2) px-5 py-2 text-sm font-bold text-(--text-main) hover:bg-(--surface-3)"
                   >
                     編集
                   </button>
@@ -238,15 +228,18 @@ export default function ChannelClient({ channel }: Props) {
             </div>
           </div>
 
-          <div className="my-8 border-t border-slate-400" />
+          <div className="my-8 border-t border-(--border)" />
+
           <div className="mt-8">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-200">投稿動画</h2>
+              <h2 className="text-xl font-bold text-(--text-main)">
+                投稿動画
+              </h2>
 
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="rounded-lg border border-slate-700 bg-slate-900 px-1 py-2 text-sm text-slate-200 outline-none"
+                className="rounded-lg border border-(--border) bg-(--surface-1) px-1 py-2 text-sm text-(--text-main) outline-none focus:border-(--accent)"
               >
                 <option value="newest">新しい順</option>
                 <option value="oldest">古い順</option>

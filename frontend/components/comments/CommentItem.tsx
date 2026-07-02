@@ -100,10 +100,10 @@ export function CommentItem({
 
   return (
     <>
-      <div className="rounded-xl bg-slate-900/70 p-4">
+      <div className="rounded-xl bg-(--surface-1) p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-sky-500 text-sm font-bold text-white">
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-(--accent) text-sm font-bold text-(--accent-text)">
               {comment.user.avatar_path ? (
                 <img
                   src={mediaUrl(comment.user.avatar_path)}
@@ -116,15 +116,15 @@ export function CommentItem({
             </div>
 
             <div>
-              <span className="text-sm font-semibold text-white">
+              <span className="text-sm font-semibold text-(--text-main)">
                 {comment.user.name}
               </span>
-              <span className="ml-2 text-xs text-slate-400">
+              <span className="ml-2 text-xs text-(--text-sub)">
                 {formatRelativeTime(comment.created_at)}
               </span>
 
               {comment.created_at !== comment.updated_at && (
-                <span className="ml-2 text-xs text-slate-500">
+                <span className="ml-2 text-xs text-(--text-sub)">
                   （編集済み）
                 </span>
               )}
@@ -136,26 +136,26 @@ export function CommentItem({
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="rounded-full p-2 hover:bg-slate-800"
+                className="rounded-full p-2 hover:bg-(--surface-3)"
               >
                 <BsThreeDotsVertical size={16} />
               </button>
 
               {isMenuOpen && (
-                <div className="absolute right-0 top-10 z-10 w-24 rounded-xl bg-slate-800 shadow-lg">
+                <div className="absolute right-0 top-10 z-10 w-24 rounded-xl border border-(--border) bg-(--surface-1) shadow-lg">
                   {isOwner && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      setIsEditing(true);
-                    }}
-                    className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
-                  >
-                    <FiEdit size={18} />
-                    <span className="text-sm">編集</span>
-                  </button>
-                  )}                             
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsEditing(true);
+                      }}
+                      className="flex w-full items-center gap-2 px-5 py-3 hover:bg-(--surface-3)"
+                    >
+                      <FiEdit size={18} />
+                      <span className="text-sm">編集</span>
+                    </button>
+                  )}
 
                   {(isOwner || isAdmin) && (
                     <button
@@ -164,12 +164,12 @@ export function CommentItem({
                         setIsMenuOpen(false);
                         setIsDeleteModalOpen(true);
                       }}
-                      className="flex w-full items-center gap-2 px-5 py-3 hover:bg-slate-700"
+                      className="flex w-full items-center gap-2 px-5 py-3 hover:bg-(--surface-3)"
                     >
                       <FiTrash2 size={18} />
                       <span className="text-sm">削除</span>
                     </button>
-                  )}                  
+                  )}
                 </div>
               )}
             </div>
@@ -181,14 +181,14 @@ export function CommentItem({
             <textarea
               value={editBody}
               onChange={(e) => setEditBody(e.target.value)}
-              className="mt-2 w-full rounded-lg bg-slate-800 p-2 text-sm text-white"
+              className="mt-2 w-full rounded-lg border border-(--border) bg-(--surface-2) p-2 text-sm text-(--text-main)"
             />
 
             <div className="mt-2 flex gap-2">
               <button
                 type="button"
                 onClick={handleUpdate}
-                className="rounded-full bg-white px-4 py-1 text-sm text-slate-950"
+                className="rounded-full bg-(--accent) px-4 py-1 text-sm text-(--accent-text)"
               >
                 保存
               </button>
@@ -199,22 +199,25 @@ export function CommentItem({
                   setEditBody(comment.body);
                   setIsEditing(false);
                 }}
-                className="rounded-full px-4 py-1 text-sm text-slate-300 hover:bg-slate-800"
+                className="rounded-full px-4 py-1 text-sm text-(--text-sub) hover:bg-(--surface-3)"
               >
                 キャンセル
               </button>
             </div>
           </div>
         ) : (
-          <p className="mt-2 ml-12 text-sm text-slate-200">{comment.body}</p>
+          <p className="mt-2 ml-12 text-sm text-(--text-main)">
+            {comment.body}
+          </p>
         )}
+
         <div className="mt-3 ml-12 flex items-center gap-5">
           <CommentReactionButtons commentId={comment.id} />
 
           <button
             type="button"
             onClick={() => setIsReplyFormOpen(!isReplyFormOpen)}
-            className="rounded-full px-3 py-2 text-xs font-bold text-slate-300 hover:bg-slate-800"
+            className="rounded-full px-3 py-2 text-xs font-bold text-(--text-sub) hover:bg-(--surface-3)"
           >
             返信
           </button>

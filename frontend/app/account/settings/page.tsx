@@ -66,15 +66,15 @@ export default function AccountSettingsPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-linear-to-b from-sky-950 to-slate-950 py-10 text-white">
+      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) py-10 text-(--text-main)">
         <div className="mx-auto max-w-2xl px-4">
           <h1 className="text-2xl font-bold">アカウント設定</h1>
 
-          <div className="mt-8 space-y-8 rounded-2xl bg-slate-900 p-6 shadow-xl">
+          <div className="mt-8 space-y-8 rounded-2xl border border-(--border) bg-(--surface-1) p-6 shadow-xl">
             <section>
               <h2 className="text-lg font-semibold">メールアドレス変更</h2>
 
-              <p className="mt-2 text-sm text-slate-400">
+              <p className="mt-2 text-sm text-(--text-sub)">
                 現在のメールアドレス: {currentUser?.email ?? "取得中..."}
               </p>
 
@@ -84,13 +84,13 @@ export default function AccountSettingsPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="新しいメールアドレス"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-lg border border-(--border) bg-(--surface-2) px-4 py-2 text-sm outline-none focus:border-(--accent)"
                 />
 
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="rounded-full bg-slate-700 px-5 py-2 text-sm font-semibold text-white hover:bg-slate-600"
+                    className="rounded-full border border-(--border) bg-(--surface-2) px-5 py-2 text-sm font-semibold text-(--text-main) hover:bg-(--surface-3)"
                   >
                     メールアドレスを変更
                   </button>
@@ -98,7 +98,7 @@ export default function AccountSettingsPage() {
               </form>
             </section>
 
-            <div className="border-t border-slate-700" />
+            <div className="border-t border-(--border)" />
 
             <section>
               <h2 className="text-lg font-semibold">パスワード変更</h2>
@@ -109,7 +109,7 @@ export default function AccountSettingsPage() {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="現在のパスワード"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-lg border border-(--border) bg-(--surface-2) px-4 py-2 text-sm outline-none focus:border-(--accent)"
                 />
 
                 <input
@@ -117,7 +117,7 @@ export default function AccountSettingsPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="新しいパスワード"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-lg border border-(--border) bg-(--surface-2) px-4 py-2 text-sm outline-none focus:border-(--accent)"
                 />
 
                 <input
@@ -125,13 +125,13 @@ export default function AccountSettingsPage() {
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   placeholder="新しいパスワード（確認）"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+                  className="w-full rounded-lg border border-(--border) bg-(--surface-2) px-4 py-2 text-sm outline-none focus:border-(--accent)"
                 />
 
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="rounded-full bg-slate-700 px-5 py-2 text-sm font-semibold text-white hover:bg-slate-600"
+                    className="rounded-full border border-(--border) bg-(--surface-2) px-5 py-2 text-sm font-semibold text-(--text-main) hover:bg-(--surface-3)"
                   >
                     パスワードを変更
                   </button>
@@ -139,14 +139,14 @@ export default function AccountSettingsPage() {
               </form>
             </section>
 
-            <div className="border-t border-slate-700" />
+            <div className="border-t border-(--border)" />
 
             <section>
-              <h2 className="text-lg font-semibold text-red-400">
+              <h2 className="text-lg font-semibold text-(--danger-text)">
                 アカウント削除
               </h2>
 
-              <p className="mt-2 text-sm text-slate-400">
+              <p className="mt-2 text-sm text-(--text-sub)">
                 アカウントを削除すると、元に戻すことはできません。
               </p>
 
@@ -154,7 +154,7 @@ export default function AccountSettingsPage() {
                 <button
                   type="button"
                   onClick={() => setIsDeleteModalOpen(true)}
-                  className="rounded-full bg-red-700 px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-950"
+                  className="rounded-full bg-(--danger-bg) px-5 py-2 text-sm font-semibold text-(--danger-text) hover:bg-(--danger-hover)"
                 >
                   アカウント削除
                 </button>
@@ -171,7 +171,6 @@ export default function AccountSettingsPage() {
           />
         </div>
       </main>
-
     </>
   );
 }

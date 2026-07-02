@@ -22,87 +22,90 @@ export default async function MovieDetailPage({
   const movie = await getMovie(id);
   const comments = await getComments(id);
 
-  return (
-    <>
-      <Header />
-      <main className="mx-auto flex max-w-350 gap-6 px-4 pt-10 pb-6 text-white">
-        <section className="min-w-0 flex-1">
-          {movie.movie_path && (
-            <video controls className="w-full rounded-xl bg-black">
-              <source src={mediaUrl(movie.movie_path)} type="video/mp4" />
-            </video>
-          )}
-          <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <h1 className=" text-2xl font-bold text-white">{movie.title}</h1>
-            <MovieActionButtons movieId={movie.id} ownerId={movie.user.id} />
+return (
+  <>
+    <Header />
+    <main className="mx-auto flex max-w-350 bg-linear-to-b from-(--page-from) to-(--page-to) gap-6 px-4 pt-10 pb-6 text-(--text-main)">
+      <section className="min-w-0 flex-1">
+        {movie.movie_path && (
+          <video controls className="w-full rounded-xl bg-black">
+            <source src={mediaUrl(movie.movie_path)} type="video/mp4" />
+          </video>
+        )}
+
+        <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <h1 className="text-2xl font-bold text-(--text-main)">
+            {movie.title}
+          </h1>
+          <MovieActionButtons movieId={movie.id} ownerId={movie.user.id} />
+        </div>
+
+        <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href={`/channel/${movie.user.id}`}
+              className="flex items-center gap-3"
+            >
+              <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-(--accent) font-bold text-(--accent-text)">
+                {movie.user.avatar_path ? (
+                  <Image
+                    src={mediaUrl(movie.user.avatar_path)}
+                    alt={movie.user.name}
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  movie.user.name.slice(0, 1)
+                )}
+              </div>
+
+              <div>
+                <p className="font-bold">{movie.user.name}</p>
+                <SubscriberCount userId={movie.user.id} />
+              </div>
+            </Link>
+
+            <FollowButton userId={movie.user.id} />
           </div>
 
-          <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-wrap items-center gap-3">
-              <Link
-                href={`/channel/${movie.user.id}`}
-                className="flex items-center gap-3"
-              >
-                <div className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-emerald-500 font-bold text-black">
-                  {movie.user.avatar_path ? (
-                    <Image
-                      src={mediaUrl(movie.user.avatar_path)}
-                      alt={movie.user.name}
-                      width={40}
-                      height={40}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    movie.user.name.slice(0, 1)
-                  )}
-                </div>
-
-                <div>
-                  <p className="font-bold">{movie.user.name}</p>
-                  <SubscriberCount userId={movie.user.id} />
-                </div>
-              </Link>
-
-              <FollowButton userId={movie.user.id} />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
-              <MovieReactionButtons movieId={movie.id} />
-              <ShareButton movieId={movie.id} title={movie.title} />
-            </div>
+          <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
+            <MovieReactionButtons movieId={movie.id} />
+            <ShareButton movieId={movie.id} title={movie.title} />
           </div>
+        </div>
 
-          <div className="mt-4 rounded-xl bg-slate-800 p-4 text-sm">
-            <div className="font-bold">
-              <span>{movie.views.toLocaleString()} 回視聴 </span>
-              <span>
-                {new Date(movie.created_at).toLocaleDateString("ja-JP")}
+        <div className="mt-4 rounded-xl bg-(--surface-2) p-4 text-sm">
+          <div className="font-bold">
+            <span>{movie.views.toLocaleString()} 回視聴 </span>
+            <span>
+              {new Date(movie.created_at).toLocaleDateString("ja-JP")}
+            </span>
+            {movie.topics.map((topic) => (
+              <span key={topic.id} className="mr-1">
+                #{topic.name}
               </span>
-              {movie.topics.map((topic) => (
-                <span key={topic.id} className="mr-1">
-                  #{topic.name}
-                </span>
-              ))}
-            </div>
-
-            <p className="mt-2 leading-relaxed">
-              {movie.description ?? "No description."}
-            </p>
+            ))}
           </div>
 
-          <CommentSection movieId={id} comments={comments} />
-        </section>
+          <p className="mt-2 leading-relaxed">
+            {movie.description ?? "No description."}
+          </p>
+        </div>
 
-        <aside className="hidden w-90 shrink-0 lg:block">
-          <div className="rounded-xl bg-slate-900 p-4">
-            <p className="font-bold">おすすめ動画</p>
-            <RelatedMovies
-              movieId={movie.id}
-              topics={movie.topics.map((topic) => topic.name)}
-            />
-          </div>
-        </aside>
-      </main>
-    </>
-  );
+        <CommentSection movieId={id} comments={comments} />
+      </section>
+
+      <aside className="hidden w-90 shrink-0 lg:block">
+        <div className="rounded-xl bg-(--surface-1) p-4">
+          <p className="font-bold">おすすめ動画</p>
+          <RelatedMovies
+            movieId={movie.id}
+            topics={movie.topics.map((topic) => topic.name)}
+          />
+        </div>
+      </aside>
+    </main>
+  </>
+);
 }
