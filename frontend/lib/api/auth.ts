@@ -42,6 +42,39 @@ export async function login(email: string, password: string) {
   return res.json();
 }
 
+export async function register(
+  name: string,
+  email: string,
+  password: string,
+  password_confirmation: string,
+) {
+  await getCsrfCookie();
+
+  const token = getCookie("XSRF-TOKEN");
+
+  const res = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-XSRF-TOKEN": token,
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+      password_confirmation,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("登録に失敗しました");
+  }
+
+  return res.json();
+}
+
 export async function getCurrentUser() {
   const res = await fetch(`${API_URL}/user`, {
     headers: {

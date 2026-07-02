@@ -1,20 +1,21 @@
-// frontend/app/login/page.tsx
+// frontend/app/register/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "@/lib/api/auth";
+import { register } from "@/lib/api/auth";
 import Link from "next/link";
 import Logo from "@/components/header/Logo";
 import { FcGoogle } from "react-icons/fc";
 
-  
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
-  
+
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
 
@@ -28,13 +29,17 @@ export default function LoginPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    try {
-      await login(email, password);
+    if (password !== passwordConfirmation) {
+      setMessage("パスワードが一致しません。");
+      return;
+    }
 
-      router.push("/dashboard");
+    try {
+      await register(name, email, password, passwordConfirmation );
+      router.push("/login");
     } catch (error) {
       console.error(error);
-      setMessage("メールアドレスまたはパスワードが正しくありません。");
+      setMessage("登録に失敗しました。入力内容を確認してください。");
     }
   }
 
@@ -46,6 +51,14 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="名前"
+            className="w-full rounded border border-(--border) bg-(--surface-2) p-2 text-(--text-main) outline-none focus:border-(--accent)"
+          />
+
           <input
             type="email"
             value={email}
@@ -62,15 +75,23 @@ export default function LoginPage() {
             className="w-full rounded border border-(--border) bg-(--surface-2) p-2 text-(--text-main) outline-none focus:border-(--accent)"
           />
 
+          <input
+            type="password_confirmation"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            placeholder="パスワード（確認）"
+            className="w-full rounded border border-(--border) bg-(--surface-2) p-2 text-(--text-main) outline-none focus:border-(--accent)"
+          />
+
           <button
             type="submit"
             className="w-full rounded-lg bg-(--accent) px-4 py-3 font-semibold text-(--accent-text) hover:opacity-90"
           >
-            ログイン
+            登録
           </button>
         </form>
         {message && (
-          <p className="mt-4 text-center text-sm text-[var(--danger-bg)]">
+          <p className="mt-4 text-center text-sm text-(--danger-bg)">
             {message}
           </p>
         )}
@@ -91,14 +112,14 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center">
           <p className="text-sm text-(--text-sub)">
-            アカウントをお持ちでない方
+            すでにアカウントをお持ちの方
           </p>
 
           <Link
-            href="/register"
+            href="/login"
             className="text-sm font-semibold hover:underline"
           >
-            新規登録
+            ログイン
           </Link>
         </div>
 

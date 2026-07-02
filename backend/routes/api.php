@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\FeatureRequestController;
 use App\Http\Controllers\Api\AdminFeatureRequestController;
 use App\Http\Controllers\Api\AdminTopicController;
 use App\Http\Controllers\Api\AdminUserController;
+use App\Http\Controllers\Api\RegisterController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::get('/user', function(Request $request) {
   return $request->user();
 })->middleware('auth:sanctum');
 
+// Register
+Route::post('/register', RegisterController::class);
 // Login
 Route::post('/login', [LoginController::class, 'store']);
 //Logout
