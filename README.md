@@ -6,8 +6,6 @@ Laravel（API）とNext.js（App Router）で構築したYouTube風動画共有�
 
 ## デモ
 
-## デモ
-
 - Frontend: https://youtube-like-app-five.vercel.app
 - Backend: https://youtube-like-app-production.up.railway.app
 

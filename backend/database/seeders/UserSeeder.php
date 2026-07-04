@@ -20,8 +20,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@sample.com',
                 'password' => Hash::make('password'),
                 'avatar_path' => '/avatars/admin.png',
-                'bio' => '開発者のチャンネルです。
-                SeaTubeへようこそ！このアプリはLaravel・Next.jsを用いて個人開発したYouTube風動画共有サービスです。Google OAuthや動画アップロード、チャンネル登録など、実際のWebサービスを意識して実装しました。',
+                'bio' => '開発者のチャンネルです。SeaTubeへようこそ！このアプリはLaravel・Next.jsを用いて個人開発したYouTube風動画共有サービスです。Google OAuthや動画アップロード、チャンネル登録など、実際のWebサービスを意識して実装しました。',
                 'is_admin' => true,
             ],
             [
