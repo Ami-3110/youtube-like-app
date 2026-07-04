@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
                 'avatar_path' => '/avatars/admin.png',
                 'bio' => '開発者のチャンネルです。
                 SeaTubeへようこそ！このアプリはLaravel・Next.jsを用いて個人開発したYouTube風動画共有サービスです。Google OAuthや動画アップロード、チャンネル登録など、実際のWebサービスを意識して実装しました。',
+                'is_admin' => true,
             ],
             [
                 'name' => 'デモ美',
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'avatar_path' => '/avatars/demo1.png',
                 'bio' => '開発者によるデモユーザーです。',
+                'is_admin' => false,
             ],
             [
                 'name' => 'デモ也',
@@ -38,6 +40,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'avatar_path' => '/avatars/demo2.png',
                 'bio' => '開発者によるデモユーザーです。',
+                'is_admin' => false,
             ],
             [
                 'name' => 'デモ太',
@@ -46,6 +49,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'avatar_path' => '/avatars/demo3.png',
                 'bio' => '開発者によるデモユーザーです。',
+                'is_admin' => false,
             ],
             [
                 'name' => 'デモ子',
@@ -54,6 +58,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'avatar_path' => '/avatars/demo4.png',
                 'bio' => '開発者によるデモユーザーです。',
+                'is_admin' => false,
             ],
         ];
 
