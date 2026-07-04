@@ -70,7 +70,7 @@ export default function LoginPage() {
           </button>
         </form>
         {message && (
-          <p className="mt-4 text-center text-sm text-[var(--danger-bg)]">
+          <p className="mt-4 text-center text-sm text-(--danger-bg)">
             {message}
           </p>
         )}
