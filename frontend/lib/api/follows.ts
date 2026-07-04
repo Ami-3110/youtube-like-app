@@ -14,14 +14,12 @@ export type FollowingUser = {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function getFollowStatus(
-  userId: number
-): Promise<FollowResponse> {
+export async function getFollowStatus(userId: number): Promise<FollowResponse> {
   const res = await fetch(`${API_BASE_URL}/users/${userId}/follow`, {
     cache: "no-store",
     credentials: "include",
   });
-  
+
   if (!res.ok) {
     throw new Error("Failed to fetch follow status");
   }
@@ -29,9 +27,7 @@ export async function getFollowStatus(
   return res.json();
 }
 
-export async function toggleFollow(
-  userId: number
-): Promise<FollowResponse> {
+export async function toggleFollow(userId: number): Promise<FollowResponse> {
   await getCsrfCookie();
 
   const token = getCookie("XSRF-TOKEN");
@@ -54,7 +50,7 @@ export async function toggleFollow(
 }
 
 export async function getFollowingUsers(): Promise<FollowingUser[]> {
-  const res = await fetch(`${API_BASE_URL}/me/following`, {
+  const res = await fetch(`/api/me/following`, {
     cache: "no-store",
     credentials: "include",
   });

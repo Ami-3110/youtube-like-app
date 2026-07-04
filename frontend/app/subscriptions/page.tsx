@@ -27,19 +27,19 @@ export default function SubscriptionPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) p-6 text-[var(--text-main)]">
+      <main className="min-h-screen bg-linear-to-b from-(--page-from) to-(--page-to) p-6 text-(--text-main)">
         <h1 className="text-xl font-bold">登録チャンネル</h1>
 
         {users.length === 0 ? (
-          <p className="text-[var(--text-sub)]">
+          <p className="text-(--text-sub)">
             登録しているチャンネルがありません。
           </p>
         ) : (
           <div className="space-y-4">
             {users.map((user) => (
               <Link key={user.id} href={`/channel/${user.id}`}>
-                <div className="flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-1)] p-4 hover:bg-[var(--surface-3)]">
-                  <div className="flex size-12 items-center justify-center overflow-hidden rounded-full bg-[var(--accent)] font-bold text-[var(--accent-text)]">
+                <div className="flex items-center gap-4 rounded-xl border border-(--border) bg-(--surface-1) p-4 hover:bg-(--surface-3)">
+                  <div className="flex size-12 items-center justify-center overflow-hidden rounded-full bg-(--accent) font-bold text-(--accent-text)">
                     {user.avatar_path ? (
                       <Image
                         src={mediaUrl(user.avatar_path)}
