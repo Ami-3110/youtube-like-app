@@ -19,6 +19,7 @@ class TopicSeeder extends Seeder
             '哺乳類',
             '魚群',
             'サメ',
+            'エイ',
             'ウミウシ',
             '甲殻類',
             'マクロ',
@@ -30,6 +31,7 @@ class TopicSeeder extends Seeder
             '地形',
             'レック',
             'ケーブ',
+            'スキン',
         ];
 
         foreach ($topics as $topic) {
