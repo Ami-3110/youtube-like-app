@@ -11,8 +11,6 @@ type TopicBarProps = {
   onSelectTopic: (topic: string) => void;
 };
 
-
-
 export default function TopicBar({
   selectedTopic,
   onSelectTopic,

@@ -5,7 +5,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getTopics(): Promise<Topic[]> {
   const res = await fetch(`${API_BASE_URL}/topics`, {
-    credentials: "include",
+    cache: "no-store",
   });
 
   if (!res.ok) {
