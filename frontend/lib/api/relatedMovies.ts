@@ -5,9 +5,9 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getRelatedMovies(
   movieId: number,
-):Promise<RelatedMovie[]> {
+): Promise<RelatedMovie[]> {
   const response = await fetch(`${API_BASE_URL}/movies/${movieId}/related`, {
-    credentials: "include",
+    cache: "no-store",
   });
 
   if (!response.ok) {
