@@ -3,14 +3,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
 export function getCookie(name: string) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
+  const cookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${name}=`));
 
-  if (parts.length === 2) {
-    return decodeURIComponent(parts.pop()!.split(";").shift()!);
-  }
-
-  return "";
+  return cookie ? decodeURIComponent(cookie.split("=")[1]) : "";
 }
 
 export async function getCsrfCookie() {
@@ -23,6 +20,7 @@ export async function login(email: string, password: string) {
   await getCsrfCookie();
 
   const token = getCookie("XSRF-TOKEN");
+  console.log("XSRF token:", token);
 
   const res = await fetch(`${API_URL}/login`, {
     method: "POST",
