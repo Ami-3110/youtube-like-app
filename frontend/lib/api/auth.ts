@@ -20,7 +20,6 @@ export async function login(email: string, password: string) {
   await getCsrfCookie();
 
   const token = getCookie("XSRF-TOKEN");
-  console.log("XSRF token:", token);
 
   const res = await fetch(`${API_URL}/login`, {
     method: "POST",

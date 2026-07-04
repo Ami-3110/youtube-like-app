@@ -12,10 +12,25 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "seatube-api.up.railway.app",
+        hostname: "youtube-like-app-production.up.railway.app",
         pathname: "/**",
       },
     ],
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination:
+          "https://youtube-like-app-production.up.railway.app/api/:path*",
+      },
+      {
+        source: "/sanctum/:path*",
+        destination:
+          "https://youtube-like-app-production.up.railway.app/sanctum/:path*",
+      },
+    ];
   },
 };
 
