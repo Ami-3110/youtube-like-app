@@ -1,6 +1,6 @@
 // frontend/lib/api/auth.ts
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
+const API_URL = "/api";
+const BACKEND_URL = "";
 
 export function getCookie(name: string) {
   const cookie = document.cookie
