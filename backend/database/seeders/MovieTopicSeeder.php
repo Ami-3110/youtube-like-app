@@ -16,7 +16,7 @@ class MovieTopicSeeder extends Seeder
         $relations = [
 
         'ハワイのマンタ' => [
-            'サメ',
+            'エイ',
             'ボート',
             'ナイト',
             'スキン',
@@ -60,7 +60,7 @@ class MovieTopicSeeder extends Seeder
         ],
 
         'ヌサペニダのマンタ' => [
-            'サメ',
+            'エイ',
             'ボート',
         ],
 

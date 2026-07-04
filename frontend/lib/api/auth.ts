@@ -72,13 +72,13 @@ export async function register(
 }
 
 export async function getCurrentUser() {
-  const res = await fetch(`${API_URL}/user`, {
+  const res = await fetch(`/api/user`, {
     headers: {
       Accept: "application/json",
     },
     credentials: "include",
   });
-  
+
   if (!res.ok) {
     return null;
   }
@@ -91,7 +91,7 @@ export async function logout() {
 
   const token = getCookie("XSRF-TOKEN");
 
-  const res = await fetch(`${API_URL}/logout`, {
+  const res = await fetch(`/api/logout`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -103,6 +103,6 @@ export async function logout() {
   if (!res.ok) {
     throw new Error("ログアウトに失敗しました");
   }
-  
+
   return res.json();
 }
