@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: "youtube-like-app-production.up.railway.app",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      },
     ],
   },
 
