@@ -3,7 +3,8 @@ import { mediaUrl } from "@/lib/mediaUrl";
 import { MovieDetail } from "@/types/movie";
 
 async function getMovie(id: string): Promise<MovieDetail> {
-  const res = await fetch(`http://localhost:8000/api/movies/${id}`, {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const res = await fetch(`${API_URL}/movies/${id}`, {
     cache: "no-store",
   });
 
