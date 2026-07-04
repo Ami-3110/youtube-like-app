@@ -1,6 +1,5 @@
 // frontend/lib/api/auth.ts
 const API_URL = "/api";
-const BACKEND_URL = "";
 
 export function getCookie(name: string) {
   const cookie = document.cookie
@@ -11,7 +10,7 @@ export function getCookie(name: string) {
 }
 
 export async function getCsrfCookie() {
-  await fetch(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+  await fetch("/sanctum/csrf-cookie", {
     credentials: "include",
   });
 }
