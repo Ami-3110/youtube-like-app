@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,15 +11,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MovieFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Movie::class;
+
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'title' => fake()->sentence(4),
+            'description' => fake()->paragraph(),
+            'movie_path' => 'movies/sample.mp4',
+            'thumbnail_path' => 'thumbnails/sample.jpg',
         ];
     }
+
 }
