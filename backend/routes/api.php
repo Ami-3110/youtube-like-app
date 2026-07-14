@@ -91,12 +91,10 @@ Route::middleware('auth:sanctum')->group(function () {
   // Channel edit
   Route::patch('/me/profile',[ProfileController::class, 'update']);
 
- // FeatureRequest get
+  // FeatureRequest get
   Route::get('/me/feature-requests', [FeatureRequestController::class, 'index']);
-
   // FeatureRequest post
   Route::post('/feature-requests', [FeatureRequestController::class, 'store']);
-
   // FeatureRequest withdraw
   Route::patch(
       '/feature-requests/{featureRequest}/withdraw',

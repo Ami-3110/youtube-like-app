@@ -12,7 +12,10 @@ class CommentController extends Controller
     public function index(Movie $movie)
     {
       $comments = $movie->comments()
-      ->with('user')
+      ->with([
+        'user',
+        'replies.user',
+        ])
       ->whereNull('parent_id')
       ->latest()
       ->get();

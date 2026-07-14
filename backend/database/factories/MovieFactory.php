@@ -23,5 +23,4 @@ class MovieFactory extends Factory
             'thumbnail_path' => 'thumbnails/sample.jpg',
         ];
     }
-
 }

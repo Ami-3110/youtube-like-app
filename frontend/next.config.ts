@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const backendUrl = process.env.BACKEND_URL ?? "http://localhost:8000";
+
 const nextConfig: NextConfig = {
   images: {
     dangerouslyAllowLocalIP: true,
@@ -27,13 +29,13 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination:
-          "https://youtube-like-app-production.up.railway.app/api/:path*",
+        destination: `${backendUrl}/api/:path*`,
+        // "https://youtube-like-app-production.up.railway.app/api/:path*",
       },
       {
         source: "/sanctum/:path*",
-        destination:
-          "https://youtube-like-app-production.up.railway.app/sanctum/:path*",
+        destination: `${backendUrl}/sanctum/:path*`,
+        // "https://youtube-like-app-production.up.railway.app/sanctum/:path*",
       },
     ];
   },

@@ -13,4 +13,5 @@ export type Comment = {
     name: string;
     avatar_path: string | null;
   };
+  replies?: Comment[];
 };

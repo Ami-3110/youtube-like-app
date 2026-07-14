@@ -13,7 +13,12 @@ type CommentSectionProps = {
 };
 
 export function CommentSection({ movieId, comments }: CommentSectionProps) {
-  const [commentList, setCommentList] = useState(comments);
+  const [commentList, setCommentList] = useState<Comment[]>(() =>
+    comments.flatMap((comment) => [
+      comment,
+      ...(comment.replies ?? []),
+    ]),
+  );
   const { currentUser } = useCurrentUser();
 
   function handleUpdateComment(updatedComment: Comment) {

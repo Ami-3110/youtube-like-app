@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'avatar_path' => '/avatars/admin.png',
                 'bio' => implode("\n", [
                     '開発者のチャンネルです。',
-                    'SeaTubeへようこそ！このアプリはLaravel・Next.jsを用いて個人開発したYouTube風動画共有サービスです。',
+                    'SeaTubeへようこそ。このアプリはLaravel・Next.jsを用いて個人開発したYouTube風動画共有サービスです。',
                     'Google OAuthや動画アップロード、チャンネル登録など、実際のWebサービスを意識して実装しました。',
                 ]),
                 'is_admin' => true,
