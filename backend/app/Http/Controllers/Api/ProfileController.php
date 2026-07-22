@@ -36,6 +36,7 @@ class ProfileController extends Controller
 
         $validated['avatar_path'] = '/storage/' . $avatarPath;
       }
+      unset($validated['avatar']);
 
       $user->update($validated);
 
