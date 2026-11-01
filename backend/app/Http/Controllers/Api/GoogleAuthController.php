@@ -13,13 +13,13 @@ class GoogleAuthController extends Controller
 {
     public function redirect()
     {
-        return Socialite::driver('google')->stateless()->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function callback(Request $request)
     {
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            $googleUser = Socialite::driver('google')->user();
 
             $user = User::where('google_id', $googleUser->getId())
                 ->orWhere('email', $googleUser->getEmail())
@@ -40,6 +40,7 @@ class GoogleAuthController extends Controller
             }
 
             Auth::login($user);
+            $request->session()->regenerate();
 
             return redirect(config('app.frontend_url') . '/dashboard');
         } catch (\Throwable $e) {

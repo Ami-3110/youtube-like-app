@@ -36,8 +36,8 @@ Route::post('/logout', [LoginController::class, 'destroy'])
   ->middleware('auth:sanctum');
 
 // Google OAuth
-Route::get('/auth/google', [GoogleAuthController::class, 'redirect']);
-Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+// Route::get('/auth/google', [GoogleAuthController::class, 'redirect']);
+//Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
 // Dashboard
 Route::get('/movies', [MovieController::class, 'index']);
